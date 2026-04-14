@@ -233,17 +233,82 @@ export default function LearningPage() {
             {/* 学习大纲 */}
             <div className="bg-white rounded-lg shadow-md p-6 mb-8">
               <h2 className="text-2xl font-semibold mb-4">学习大纲</h2>
-              <div className="space-y-4">
-                {learningOutline.map((module) => (
-                  <div key={module.id} className="border border-gray-200 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold mb-2">{module.title}</h3>
-                    <ul className="list-disc list-inside text-gray-600">
-                      {module.topics.map((topic, index) => (
-                        <li key={index}>{topic}</li>
-                      ))}
+              
+              {/* Python学习大纲 */}
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold mb-4 text-blue-600">Python学习大纲</h3>
+                <div className="space-y-4">
+                  <div className="border border-gray-200 rounded-lg p-4">
+                    <h4 className="text-lg font-semibold mb-2">第一部分：Python基础</h4>
+                    <ul className="list-disc list-inside text-gray-600 space-y-2">
+                      <li>Python简介与环境搭建</li>
+                      <li>基本数据类型（数字、字符串、布尔值）</li>
+                      <li>复合数据类型（列表、元组、字典、集合）</li>
+                      <li>控制流程（条件语句、循环语句）</li>
+                      <li>函数定义与调用</li>
+                      <li>模块与包的使用</li>
+                      <li>文件操作</li>
+                      <li>异常处理</li>
                     </ul>
                   </div>
-                ))}
+                  
+                  <div className="border border-gray-200 rounded-lg p-4">
+                    <h4 className="text-lg font-semibold mb-2">第二部分：Python进阶</h4>
+                    <ul className="list-disc list-inside text-gray-600 space-y-2">
+                      <li>面向对象编程基础</li>
+                      <li>类与对象</li>
+                      <li>继承与多态</li>
+                      <li>装饰器</li>
+                      <li>生成器与迭代器</li>
+                      <li>上下文管理器</li>
+                      <li>正则表达式</li>
+                      <li>多线程与多进程</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border border-gray-200 rounded-lg p-4">
+                    <h4 className="text-lg font-semibold mb-2">第三部分：Python数据分析</h4>
+                    <ul className="list-disc list-inside text-gray-600 space-y-2">
+                      <li>NumPy数值计算</li>
+                      <li>Pandas数据处理</li>
+                      <li>Matplotlib数据可视化</li>
+                      <li>Seaborn高级可视化</li>
+                      <li>数据清洗与预处理</li>
+                      <li>数据聚合与分组</li>
+                      <li>统计分析基础</li>
+                      <li>机器学习入门</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border border-gray-200 rounded-lg p-4">
+                    <h4 className="text-lg font-semibold mb-2">第四部分：实战项目</h4>
+                    <ul className="list-disc list-inside text-gray-600 space-y-2">
+                      <li>电商销售数据分析</li>
+                      <li>客户行为分析</li>
+                      <li>销售预测模型</li>
+                      <li>数据可视化 dashboard</li>
+                      <li>网络爬虫与数据采集</li>
+                      <li>自动化数据处理脚本</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              {/* 数据分析技术大纲 */}
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-blue-600">数据分析技术大纲</h3>
+                <div className="space-y-4">
+                  {learningOutline.map((module) => (
+                    <div key={module.id} className="border border-gray-200 rounded-lg p-4">
+                      <h4 className="text-lg font-semibold mb-2">{module.title}</h4>
+                      <ul className="list-disc list-inside text-gray-600">
+                        {module.topics.map((topic, index) => (
+                          <li key={index}>{topic}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
