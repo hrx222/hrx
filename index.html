@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python数据分析技术AI训练平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3B82F6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .code-editor {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="code" class="h-6 w-6 text-blue-600"></i>
+                <span class="text-xl font-bold text-gray-800">Python数据分析训练平台</span>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="#home" class="nav-link text-gray-600 hover:text-blue-600 font-medium">首页</a>
+                <a href="#profile" class="nav-link text-gray-600 hover:text-blue-600 font-medium">个人中心</a>
+                <button onclick="showLogin()" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">登录</button>
+                <button onclick="showRegister()" class="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition-colors">注册</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section id="home" class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Python数据分析技术训练</h1>
+                    <p class="text-xl mb-8">通过10个实战项目，掌握数据分析核心技能，提升就业竞争力</p>
+                    <div class="flex space-x-4">
+                        <button onclick="showRegister()" class="px-6 py-3 bg-white text-blue-600 rounded-md font-medium hover:bg-gray-100 transition-colors">立即注册</button>
+                        <a href="#projects" class="px-6 py-3 border border-white text-white rounded-md font-medium hover:bg-white hover:text-blue-600 transition-colors">浏览项目</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white/10 backdrop-blur-lg p-6 rounded-lg shadow-xl">
+                        <i data-lucide="book" class="h-16 w-16 mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">10个实战项目</h3>
+                        <p class="text-blue-100">从基础到高级，覆盖数据分析全流程</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习路径 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">学习路径</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-100 hover:shadow-md transition-shadow">
+                    <div class="text-blue-600 font-semibold mb-2">阶段一</div>
+                    <h3 class="text-xl font-bold mb-3">数据基础</h3>
+                    <p class="text-gray-600 mb-4">学习Python基础和数据处理库</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">Python基础</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">Pandas</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">NumPy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-100 hover:shadow-md transition-shadow">
+                    <div class="text-blue-600 font-semibold mb-2">阶段二</div>
+                    <h3 class="text-xl font-bold mb-3">数据分析</h3>
+                    <p class="text-gray-600 mb-4">掌握数据清洗、可视化和统计分析</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">数据清洗</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">Matplotlib</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">Seaborn</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">统计分析</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-100 hover:shadow-md transition-shadow">
+                    <div class="text-blue-600 font-semibold mb-2">阶段三</div>
+                    <h3 class="text-xl font-bold mb-3">机器学习</h3>
+                    <p class="text-gray-600 mb-4">学习机器学习算法和模型评估</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">Scikit-learn</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">模型训练</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">模型评估</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-100 hover:shadow-md transition-shadow">
+                    <div class="text-blue-600 font-semibold mb-2">阶段四</div>
+                    <h3 class="text-xl font-bold mb-3">高级应用</h3>
+                    <p class="text-gray-600 mb-4">探索NLP、时间序列和大数据分析</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">NLP</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">时间序列</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">推荐系统</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>
+                            <span class="text-gray-700">大数据处理</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 训练项目列表 -->
+    <section id="projects" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">训练项目</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="database" class="h-8 w-8 text-blue-500"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">数据清洗与预处理</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-green-100 text-green-800">初级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">处理真实世界的脏数据，学习数据清洗技巧</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    识别并处理缺失值
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    处理重复数据
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('1')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="bar-chart-3" class="h-8 w-8 text-green-500"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">探索性数据分析</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-green-100 text-green-800">初级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">分析销售数据，发现业务洞察</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    数据概览与描述性统计
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    销售趋势分析
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('2')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="pie-chart" class="h-8 w-8 text-purple-500"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">数据可视化</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-yellow-100 text-yellow-800">中级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">创建交互式数据图表，提升数据表达能力</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    创建基本图表
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    自定义图表样式
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('3')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="trending-up" class="h-8 w-8 text-orange-500"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">统计分析</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-yellow-100 text-yellow-800">中级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">应用统计方法分析学生成绩数据</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    描述性统计分析
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    假设检验
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('4')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M12 18a2 2 0 0 0 2-2V5a2 2 0 0 0-4 0v11a2 2 0 0 0 2 2z"/><path d="M16 3a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2"/><path d="M8 3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2"/></svg>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">机器学习入门</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-yellow-100 text-yellow-800">中级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">使用分类算法预测客户流失</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    数据预处理
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    特征工程
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('5')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="trending-up" class="h-8 w-8 text-blue-600"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">时间序列分析</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-red-100 text-red-800">高级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">分析股票价格数据，预测趋势</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    时间序列可视化
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    平稳性检验
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('6')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="message-square" class="h-8 w-8 text-green-600"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">自然语言处理</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-red-100 text-red-800">高级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">情感分析社交媒体数据</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    文本预处理
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    特征提取
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('7')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="heart" class="h-8 w-8 text-red-600"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">推荐系统</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-red-100 text-red-800">高级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">基于用户行为构建电影推荐系统</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    数据预处理
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    协同过滤
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('8')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="layers" class="h-8 w-8 text-purple-600"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">数据管道构建</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-red-100 text-red-800">高级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">设计自动化数据处理流程</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    数据采集
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    数据转换
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('9')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md card-hover overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="zap" class="h-8 w-8 text-yellow-500"></i>
+                            <div class="ml-3">
+                                <h3 class="text-xl font-bold text-gray-800">大数据分析</h3>
+                                <div class="inline-block px-2 py-1 rounded text-xs font-medium mt-1 bg-red-100 text-red-800">高级</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">处理和分析大规模数据集</p>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-500 mb-2">任务：</h4>
+                            <ul class="space-y-1">
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    数据加载与处理
+                                </li>
+                                <li class="flex items-center text-sm text-gray-600">
+                                    <div class="h-1.5 w-1.5 bg-blue-600 rounded-full mr-2"></div>
+                                    分布式计算
+                                </li>
+                                <li class="text-sm text-gray-500">+2 更多任务</li>
+                            </ul>
+                        </div>
+                        <button onclick="showProject('10')" class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">开始项目</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 个人中心 -->
+    <section id="profile" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">个人中心</h2>
+            <div class="max-w-4xl mx-auto">
+                <!-- 用户信息卡片 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                        <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="user" class="h-12 w-12 text-blue-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h1 class="text-2xl font-bold text-gray-800 mb-2">张三</h1>
+                            <p class="text-gray-600 mb-4">zhangsan@example.com</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-blue-600">3</div>
+                                    <div class="text-sm text-gray-500">已完成项目</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-blue-600">10</div>
+                                    <div class="text-sm text-gray-500">总项目数</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-blue-600">12.5h</div>
+                                    <div class="text-sm text-gray-500">学习时长</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-blue-600">30%</div>
+                                    <div class="text-sm text-gray-500">完成率</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 学习进度 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <div class="flex items-center mb-6">
+                        <i data-lucide="bar-chart-3" class="h-6 w-6 text-blue-600 mr-2"></i>
+                        <h3 class="text-xl font-bold text-gray-800">学习进度</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-gray-700">整体进度</span>
+                                <span class="text-sm font-medium text-blue-600">30%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 30%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-2">初级项目</h4>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-xs text-gray-500">2/2 完成</span>
+                                    <span class="text-xs font-medium text-blue-600">100%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-2">中级项目</h4>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-xs text-gray-500">1/3 完成</span>
+                                    <span class="text-xs font-medium text-blue-600">33%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 33%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-2">高级项目</h4>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-xs text-gray-500">0/5 完成</span>
+                                    <span class="text-xs font-medium text-blue-600">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 完成的项目 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center">
+                            <i data-lucide="check-circle" class="h-6 w-6 text-blue-600 mr-2"></i>
+                            <h3 class="text-xl font-bold text-gray-800">完成的项目</h3>
+                        </div>
+                        <a href="#projects" class="text-sm text-blue-600 hover:text-blue-800">查看全部项目</a>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-green-500 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-800">数据清洗与预处理</h4>
+                                    <p class="text-sm text-gray-500">完成于: 2026-01-20</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-blue-600">95/100</div>
+                                <div class="text-xs text-gray-500">优秀</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-green-500 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-800">探索性数据分析</h4>
+                                    <p class="text-sm text-gray-500">完成于: 2026-01-25</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-blue-600">92/100</div>
+                                <div class="text-xs text-gray-500">优秀</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-green-500 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-800">数据可视化</h4>
+                                    <p class="text-sm text-gray-500">完成于: 2026-02-01</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-blue-600">88/100</div>
+                                <div class="text-xs text-gray-500">优秀</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="code" class="h-6 w-6 text-blue-400"></i>
+                        <span class="text-xl font-bold">Python数据分析训练平台</span>
+                    </div>
+                    <p class="mt-2 text-gray-400">专为大学生设计的数据分析学习平台</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-gray-400 hover:text-white transition-colors">首页</a>
+                    <a href="#profile" class="text-gray-400 hover:text-white transition-colors">个人中心</a>
+                    <button onclick="showLogin()" class="text-gray-400 hover:text-white transition-colors">登录</button>
+                    <button onclick="showRegister()" class="text-gray-400 hover:text-white transition-colors">注册</button>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>© 2026 Python数据分析训练平台. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 项目详情模态框 -->
+    <div id="projectModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-6xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 id="projectTitle" class="text-2xl font-bold text-gray-800">项目详情</h2>
+                    <button onclick="closeProjectModal()" class="text-gray-500 hover:text-gray-700">
+                        <i data-lucide="x" class="h-6 w-6"></i>
+                    </button>
+                </div>
+                <div id="projectContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-8">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                    <i data-lucide="log-in" class="h-8 w-8 text-blue-600"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800">登录</h1>
+                <p class="text-gray-600 mt-2">欢迎回来，继续你的数据分析学习之旅</p>
+            </div>
+            <div id="loginError" class="mb-6 p-3 bg-red-100 text-red-700 rounded-md hidden"></div>
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="mail" class="h-5 w-5 text-gray-400"></i>
+                        </div>
+                        <input type="email" id="loginEmail" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="请输入邮箱" required>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="lock" class="h-5 w-5 text-gray-400"></i>
+                        </div>
+                        <input type="password" id="loginPassword" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="请输入密码" required>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember-me" name="remember-me" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">记住我</label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-blue-600 hover:text-blue-500">忘记密码？</a>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">登录</button>
+                </div>
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">还没有账号？<button type="button" onclick="closeLoginModal(); showRegister()" class="font-medium text-blue-600 hover:text-blue-500">立即注册</button></p>
+                </div>
+            </form>
+            <div class="mt-8">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">测试账号</span>
+                    </div>
+                </div>
+                <div class="mt-4 bg-gray-50 p-4 rounded-md">
+                    <p class="text-sm text-gray-600">邮箱: test@example.com</p>
+                    <p class="text-sm text-gray-600">密码: password123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-8">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                    <i data-lucide="user-plus" class="h-8 w-8 text-blue-600"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800">注册</h1>
+                <p class="text-gray-600 mt-2">加入我们，开始你的数据分析学习之旅</p>
+            </div>
+            <div id="registerError" class="mb-6 p-3 bg-red-100 text-red-700 rounded-md hidden"></div>
+            <div id="registerSuccess" class="mb-6 p-3 bg-green-100 text-green-700 rounded-md hidden"></div>
+            <form onsubmit="handleRegister(event)">
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="user" class="h-5 w-5 text-gray-400"></i>
+                        </div>
+                        <input type="text" id="registerName" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="请输入姓名" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="registerEmail" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="mail" class="h-5 w-5 text-gray-400"></i>
+                        </div>
+                        <input type="email" id="registerEmail" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="请输入邮箱" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="lock" class="h-5 w-5 text-gray-400"></i>
+                        </div>
+                        <input type="password" id="registerPassword" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="请输入密码（至少6位）" minlength="6" required>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">确认密码</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="lock" class="h-5 w-5 text-gray-400"></i>
+                        </div>
+                        <input type="password" id="confirmPassword" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="请再次输入密码" minlength="6" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">注册</button>
+                </div>
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">已有账号？<button type="button" onclick="closeRegisterModal(); showLogin()" class="font-medium text-blue-600 hover:text-blue-500">立即登录</button></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 初始化Lucide图标
+        lucide.createIcons();
+
+        // 项目数据
+        const projects = [
+            {
+                id: "1",
+                title: "数据清洗与预处理",
+                description: "处理真实世界的脏数据，学习数据清洗技巧。在这个项目中，你将学习如何识别和处理缺失值、重复数据、数据类型转换以及异常值检测与处理。",
+                difficulty: "初级",
+                tasks: ["识别并处理缺失值", "处理重复数据", "数据类型转换", "异常值检测与处理"],
+                starterCode: `import pandas as pd\n\n# 加载数据\ndf = pd.read_csv("data.csv")\n\n# 查看数据基本信息\nprint(df.info())\n\n# 识别缺失值\nprint("\\n缺失值统计:")\nprint(df.isnull().sum())\n\n# 你的代码在这里...`
+            },
+            {
+                id: "2",
+                title: "探索性数据分析",
+                description: "分析销售数据，发现业务洞察。在这个项目中，你将学习如何进行数据概览与描述性统计、销售趋势分析、产品类别分析以及客户细分分析。",
+                difficulty: "初级",
+                tasks: ["数据概览与描述性统计", "销售趋势分析", "产品类别分析", "客户细分分析"],
+                starterCode: `import pandas as pd\nimport matplotlib.pyplot as plt\n\n# 加载销售数据\ndf = pd.read_csv("sales_data.csv")\n\n# 查看数据基本信息\nprint(df.head())\nprint(df.describe())\n\n# 你的代码在这里...`
+            },
+            {
+                id: "3",
+                title: "数据可视化",
+                description: "创建交互式数据图表，提升数据表达能力。在这个项目中，你将学习如何创建基本图表、自定义图表样式、多图表组合以及交互式图表。",
+                difficulty: "中级",
+                tasks: ["创建基本图表", "自定义图表样式", "多图表组合", "交互式图表"],
+                starterCode: `import pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# 加载数据\ndf = pd.read_csv("data.csv")\n\n# 设置绘图风格\nsns.set(style="whitegrid")\n\n# 你的代码在这里...`
+            },
+            {
+                id: "4",
+                title: "统计分析",
+                description: "应用统计方法分析学生成绩数据。在这个项目中，你将学习如何进行描述性统计分析、假设检验、方差分析以及相关性分析。",
+                difficulty: "中级",
+                tasks: ["描述性统计分析", "假设检验", "方差分析", "相关性分析"],
+                starterCode: `import pandas as pd\nimport numpy as np\nfrom scipy import stats\n\n# 加载学生成绩数据\ndf = pd.read_csv("student_grades.csv")\n\n# 描述性统计\nprint(df.describe())\n\n# 你的代码在这里...`
+            },
+            {
+                id: "5",
+                title: "机器学习入门",
+                description: "使用分类算法预测客户流失。在这个项目中，你将学习如何进行数据预处理、特征工程、模型训练与评估以及模型优化。",
+                difficulty: "中级",
+                tasks: ["数据预处理", "特征工程", "模型训练与评估", "模型优化"],
+                starterCode: `import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score\n\n# 加载客户数据\ndf = pd.read_csv("customer_data.csv")\n\n# 数据预处理\n# 你的代码在这里...`
+            },
+            {
+                id: "6",
+                title: "时间序列分析",
+                description: "分析股票价格数据，预测趋势。在这个项目中，你将学习如何进行时间序列可视化、平稳性检验、ARIMA模型以及预测与评估。",
+                difficulty: "高级",
+                tasks: ["时间序列可视化", "平稳性检验", "ARIMA模型", "预测与评估"],
+                starterCode: `import pandas as pd\nimport matplotlib.pyplot as plt\nfrom statsmodels.tsa.arima.model import ARIMA\n\n# 加载股票数据\ndf = pd.read_csv("stock_prices.csv")\ndf['Date'] = pd.to_datetime(df['Date'])\ndf.set_index('Date', inplace=True)\n\n# 你的代码在这里...`
+            },
+            {
+                id: "7",
+                title: "自然语言处理",
+                description: "情感分析社交媒体数据。在这个项目中，你将学习如何进行文本预处理、特征提取、情感分类以及结果可视化。",
+                difficulty: "高级",
+                tasks: ["文本预处理", "特征提取", "情感分类", "结果可视化"],
+                starterCode: `import pandas as pd\nfrom nltk.sentiment.vader import SentimentIntensityAnalyzer\n\n# 加载社交媒体数据\ndf = pd.read_csv("social_media_data.csv")\n\n# 初始化情感分析器\nsia = SentimentIntensityAnalyzer()\n\n# 你的代码在这里...`
+            },
+            {
+                id: "8",
+                title: "推荐系统",
+                description: "基于用户行为构建电影推荐系统。在这个项目中，你将学习如何进行数据预处理、协同过滤、内容推荐以及混合推荐。",
+                difficulty: "高级",
+                tasks: ["数据预处理", "协同过滤", "内容推荐", "混合推荐"],
+                starterCode: `import pandas as pd\nfrom surprise import Dataset, Reader, KNNBasic\nfrom surprise.model_selection import train_test_split\n\n# 加载电影评分数据\ndf = pd.read_csv("movie_ratings.csv")\n\n# 准备数据\nreader = Reader(rating_scale=(1, 5))\ndata = Dataset.load_from_df(df[['userId', 'movieId', 'rating']], reader)\n\n# 你的代码在这里...`
+            },
+            {
+                id: "9",
+                title: "数据管道构建",
+                description: "设计自动化数据处理流程。在这个项目中，你将学习如何进行数据采集、数据转换、数据存储以及流程调度。",
+                difficulty: "高级",
+                tasks: ["数据采集", "数据转换", "数据存储", "流程调度"],
+                starterCode: `import pandas as pd\nimport os\nfrom datetime import datetime\n\n# 数据采集函数\ndef collect_data():\n    # 你的代码在这里...\n    pass\n\n# 数据转换函数\ndef transform_data(data):\n    # 你的代码在这里...\n    pass\n\n# 主管道函数\ndef data_pipeline():\n    # 你的代码在这里...\n    pass\n\n# 执行管道\ndata_pipeline()`
+            },
+            {
+                id: "10",
+                title: "大数据分析",
+                description: "处理和分析大规模数据集。在这个项目中，你将学习如何进行数据加载与处理、分布式计算、内存优化以及结果分析。",
+                difficulty: "高级",
+                tasks: ["数据加载与处理", "分布式计算", "内存优化", "结果分析"],
+                starterCode: `import pandas as pd\nimport dask.dataframe as dd\n\n# 加载大规模数据集\nddf = dd.read_csv("large_dataset.csv")\n\n# 基本统计\nprint(ddf.describe().compute())\n\n# 你的代码在这里...`
+            }
+        ];
+
+        // 显示项目详情
+        function showProject(id) {
+            const project = projects.find(p => p.id === id);
+            if (project) {
+                document.getElementById('projectTitle').textContent = project.title;
+                const content = `\n                    <div class="flex items-center justify-between mb-4">\n                        <div class="flex items-center">\n                            <span class="inline-block px-3 py-1 rounded text-sm font-medium ${
+                                project.difficulty === "初级" ? "bg-green-100 text-green-800" :
+                                project.difficulty === "中级" ? "bg-yellow-100 text-yellow-800" :
+                                "bg-red-100 text-red-800"
+                            }">${project.difficulty}</span>\n                        </div>\n                    </div>\n                    <p class="text-gray-600 mb-6">${project.description}</p>\n                    <div class="mb-6">\n                        <h3 class="text-lg font-semibold text-gray-700 mb-3">任务要求：</h3>\n                        <ul class="space-y-2">\n                            ${project.tasks.map(task => `<li class="flex items-center text-gray-600"><div class="h-2 w-2 bg-blue-600 rounded-full mr-2"></div>${task}</li>`).join('')}\n                        </ul>\n                    </div>\n                    <div class="mb-6">\n                        <h3 class="text-lg font-semibold text-gray-700 mb-3">代码编辑器</h3>\n                        <div class="code-editor" id="codeEditor">${project.starterCode}</div>\n                    </div>\n                    <div class="mb-6">\n                        <h3 class="text-lg font-semibold text-gray-700 mb-3">输出</h3>\n                        <div class="bg-gray-900 rounded-md p-4 text-white min-h-[100px]">\n                            <pre id="output">// 运行代码查看输出</pre>\n                        </div>\n                    </div>\n                    <div class="flex space-x-2">\n                        <button onclick="runCode()" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">\n                            <i data-lucide="play" class="h-4 w-4 mr-1"></i> 运行\n                        </button>\n                        <button onclick="submitProject()" class="flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">\n                            <i data-lucide="save" class="h-4 w-4 mr-1"></i> 提交\n                        </button>\n                    </div>\n                    <div class="mt-6">\n                        <h3 class="text-lg font-semibold text-gray-700 mb-3">AI 助手</h3>\n                        <div class="bg-blue-50 p-4 rounded-lg">\n                            <p class="text-gray-600 mb-4">需要帮助？AI助手可以提供代码建议、错误修复和学习指导。</p>\n                            <div class="space-y-3">\n                                <div class="bg-white p-3 rounded-md shadow-sm">\n                                    <p class="text-sm text-gray-700">尝试使用fillna()方法填充缺失值</p>\n                                </div>\n                                <div class="bg-white p-3 rounded-md shadow-sm">\n                                    <p class="text-sm text-gray-700">使用drop_duplicates()去除重复数据</p>\n                                </div>\n                                <div class="bg-white p-3 rounded-md shadow-sm">\n                                    <p class="text-sm text-gray-700">使用astype()进行数据类型转换</p>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                `;
+                document.getElementById('projectContent').innerHTML = content;
+                document.getElementById('projectModal').classList.remove('hidden');
+                lucide.createIcons();
+            }
+        }
+
+        // 关闭项目模态框
+        function closeProjectModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+        }
+
+        // 运行代码
+        function runCode() {
+            const code = document.getElementById('codeEditor').textContent;
+            document.getElementById('output').textContent = `代码运行结果:\n\n${code}\n\n执行成功！`;
+        }
+
+        // 提交项目
+        function submitProject() {
+            alert('项目提交成功！');
+            closeProjectModal();
+        }
+
+        // 显示登录模态框
+        function showLogin() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // 关闭登录模态框
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        // 显示注册模态框
+        function showRegister() {
+            document.getElementById('registerModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // 关闭注册模态框
+        function closeRegisterModal() {
+            document.getElementById('registerModal').classList.add('hidden');
+        }
+
+        // 处理登录
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // 测试账号验证
+            if (email === 'test@example.com' && password === 'password123') {
+                alert('登录成功！');
+                closeLoginModal();
+                // 跳转到个人中心
+                document.getElementById('profile').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                document.getElementById('loginError').textContent = '邮箱或密码错误';
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        // 处理注册
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // 验证密码
+            if (password !== confirmPassword) {
+                document.getElementById('registerError').textContent = '两次输入的密码不一致';
+                document.getElementById('registerError').classList.remove('hidden');
+                document.getElementById('registerSuccess').classList.add('hidden');
+                return;
+            }
+            
+            // 模拟注册
+            document.getElementById('registerError').classList.add('hidden');
+            document.getElementById('registerSuccess').textContent = '注册成功！正在跳转到登录页面...';
+            document.getElementById('registerSuccess').classList.remove('hidden');
+            
+            // 3秒后跳转到登录
+            setTimeout(() => {
+                closeRegisterModal();
+                showLogin();
+            }, 3000);
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const projectModal = document.getElementById('projectModal');
+            const loginModal = document.getElementById('loginModal');
+            const registerModal = document.getElementById('registerModal');
+            
+            if (event.target === projectModal) {
+                closeProjectModal();
+            }
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+            if (event.target === registerModal) {
+                closeRegisterModal();
+            }
+        };
+    </script>
+</body>
+</html>
