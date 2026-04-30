@@ -2,6 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Book, Code, BarChart3, PieChart, TrendingUp, MessageSquare, Heart, Database, Zap, Layers } from "lucide-react";
 
+// 自定义Brain图标
+const Brain = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M12 18a2 2 0 0 0 2-2V5a2 2 0 0 0-4 0v11a2 2 0 0 0 2 2z"/>
+    <path d="M16 3a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2"/>
+    <path d="M8 3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2"/>
+  </svg>
+);
+
 // 模拟项目数据
 const projects = [
   {
@@ -93,26 +113,6 @@ const learningPath = [
   { stage: "阶段三", title: "机器学习", description: "学习机器学习算法和模型评估", skills: ["Scikit-learn", "模型训练", "模型评估"] },
   { stage: "阶段四", title: "高级应用", description: "探索NLP、时间序列和大数据分析", skills: ["NLP", "时间序列", "推荐系统", "大数据处理"] }
 ];
-
-// 自定义Brain图标
-const Brain = ({ className }: { className?: string }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-  >
-    <path d="M12 18a2 2 0 0 0 2-2V5a2 2 0 0 0-4 0v11a2 2 0 0 0 2 2z"/>
-    <path d="M16 3a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2"/>
-    <path d="M8 3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2"/>
-  </svg>
-);
 
 const Home: React.FC = () => {
   return (
