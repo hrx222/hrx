@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python基础训练平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        code, pre {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .quiz-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            transform: scale(1.02);
+        }
+        
+        .quiz-option.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-color: #059669;
+        }
+        
+        .quiz-option.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border-color: #dc2626;
+        }
+        
+        .progress-ring {
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .match-card {
+            transition: all 0.3s ease;
+        }
+        
+        .match-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .dark body {
+            background: #1a1a2e;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-100">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" onclick="navigate('home')" class="flex items-center space-x-3">
+                    <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center shadow-lg">
+                        <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold gradient-text">Python基础训练</span>
+                        <p class="text-xs text-gray-500">专为大学生设计</p>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" onclick="navigate('home')" class="text-gray-600 hover:text-purple-600 font-medium transition-colors">首页</a>
+                    <a href="#" onclick="navigate('quiz')" class="text-gray-600 hover:text-purple-600 font-medium transition-colors">配对训练</a>
+                    <a href="#" onclick="navigate('profile')" class="text-gray-600 hover:text-purple-600 font-medium transition-colors">学习中心</a>
+                    <button onclick="toggleDarkMode()" class="p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors" title="切换模式">
+                        <svg id="sun-icon" class="h-5 w-5 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg id="moon-icon" class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <a href="#" onclick="navigate('login')" class="gradient-bg text-white px-6 py-2.5 rounded-lg font-medium hover:opacity-90 transition-opacity shadow-lg">登录</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main id="main-content" class="min-h-screen">
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="gradient-bg text-white py-12 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start space-x-3 mb-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold">Python基础训练平台</span>
+                    </div>
+                    <p class="text-white/70">专为大学生设计的Python学习平台</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" onclick="navigate('home')" class="text-white/70 hover:text-white transition-colors">首页</a>
+                    <a href="#" onclick="navigate('quiz')" class="text-white/70 hover:text-white transition-colors">配对训练</a>
+                    <a href="#" onclick="navigate('profile')" class="text-white/70 hover:text-white transition-colors">学习中心</a>
+                    <a href="#" onclick="navigate('login')" class="text-white/70 hover:text-white transition-colors">登录</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-white/20 text-center text-white/60">
+                <p>© 2026 Python基础训练平台. 让学习更简单</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 项目数据
+        const projects = [
+            { 
+                id: "1", 
+                title: "Python开发环境搭建", 
+                description: "学习安装Python和开发环境配置，掌握第一个程序的编写。本项目将带你完成Python开发环境的搭建，为后续学习打下基础。", 
+                difficulty: "初级", 
+                icon: "monitor", 
+                tasks: ["安装Python 3.x", "配置开发环境", "第一个Hello World程序"], 
+                knowledge: ["Python安装", "环境变量", "IDE使用", "print函数"], 
+                starterCode: `# 项目1: Python开发环境搭建\n# 你的第一个Python程序\n\n# 使用print()函数输出Hello World\nprint("Hello, World!")\n\n# 尝试修改下面的代码，输出你喜欢的文字\nmessage = "欢迎学习Python!"\nprint(message)\n\n# 运行代码看看效果\nprint("Python环境搭建成功!")` 
+            },
+            { 
+                id: "2", 
+                title: "变量和数据类型", 
+                description: "掌握Python基本数据类型，包括整数、浮点数、字符串和布尔值，学会数据类型之间的转换。", 
+                difficulty: "初级", 
+                icon: "hash", 
+                tasks: ["整数和浮点数", "字符串操作", "布尔值与数据类型转换"], 
+                knowledge: ["变量命名", "数据类型", "type()函数", "类型转换"], 
+                starterCode: `# 项目2: 变量和数据类型\n\n# 整数类型\nage = 20\nprint(f"年龄: {age}, 类型: {type(age)}")\n\n# 浮点数类型\nheight = 1.75\nprint(f"身高: {height}, 类型: {type(height)}")\n\n# 字符串类型\nname = "小明"\nprint(f"姓名: {name}, 类型: {type(name)}")\n\n# 布尔类型\nis_student = True\nprint(f"是学生: {is_student}, 类型: {type(is_student)}")\n\n# 数据类型转换\nnum_str = "100"\nnum_int = int(num_str)\nprint(f"字符串转整数: {num_int + 50}")` 
+            },
+            { 
+                id: "3", 
+                title: "运算符和表达式", 
+                description: "学习Python中的各种运算符，包括算术运算符、比较运算符、逻辑运算符，并编写成绩评级程序。", 
+                difficulty: "初级", 
+                icon: "calculator", 
+                tasks: ["算术运算符", "比较和逻辑运算符", "成绩评级程序"], 
+                knowledge: ["算术运算符", "比较运算符", "逻辑运算符", "运算符优先级"], 
+                starterCode: `# 项目3: 运算符和表达式\n\na, b = 10, 3\nprint(f"加法: {a} + {b} = {a + b}")\nprint(f"减法: {a} - {b} = {a - b}")\nprint(f"乘法: {a} * {b} = {a * b}")\nprint(f"除法: {a} / {b} = {a / b}")\n\n# 比较运算符\nscore = 85\nprint(f"成绩 >= 60: {score >= 60}")\n\n# 逻辑运算符\nis_pass = score >= 60\nis_excellent = score >= 90\nprint(f"及格且优秀: {is_pass and is_excellent}")` 
+            },
+            { 
+                id: "4", 
+                title: "条件语句", 
+                description: "掌握if-elif-else条件判断语句的使用，学会处理多重条件，编写一个猜数字游戏。", 
+                difficulty: "初级", 
+                icon: "branch", 
+                tasks: ["if语句基础", "多重条件判断", "猜数字游戏"], 
+                knowledge: ["if语句", "else子句", "elif子句", "嵌套条件"], 
+                starterCode: `# 项目4: 条件语句\n\n# 简单的if语句\nage = 18\nif age >= 18:\n    print("你已经成年了!")\n\n# if-else语句\nscore = 75\nif score >= 60:\n    print("及格!")\nelse:\n    print("不及格!")\n\n# if-elif-else语句\ngrade = 85\nif grade >= 90:\n    print("优秀 (A)")\nelif grade >= 80:\n    print("良好 (B)")\nelif grade >= 70:\n    print("中等 (C)")\nelse:\n    print("不及格")` 
+            },
+            { 
+                id: "5", 
+                title: "循环结构", 
+                description: "学习for和while循环的使用，掌握循环控制语句break和continue，编写九九乘法表程序。", 
+                difficulty: "初级", 
+                icon: "repeat", 
+                tasks: ["for循环遍历", "while循环", "九九乘法表"], 
+                knowledge: ["for循环", "while循环", "break", "continue", "range()"], 
+                starterCode: `# 项目5: 循环结构\n\n# for循环遍历列表\nfruits = ["苹果", "香蕉", "橙子"]\nfor fruit in fruits:\n    print(f"我喜欢吃: {fruit}")\n\n# 使用range()函数\nfor i in range(1, 6):\n    print(f"数字: {i}")\n\n# while循环\ncount = 0\nwhile count < 5:\n    print(f"count = {count}")\n    count += 1\n\n# 九九乘法表\nfor i in range(1, 10):\n    for j in range(1, i + 1):\n        print(f"{j}*{i}={i*j}", end="\\t")\n    print()` 
+            },
+            { 
+                id: "6", 
+                title: "列表和元组", 
+                description: "掌握Python中的序列数据结构，包括列表的增删改查操作、元组的创建和使用。", 
+                difficulty: "初级", 
+                icon: "list", 
+                tasks: ["列表增删改查", "切片操作", "学生成绩管理"], 
+                knowledge: ["列表创建", "索引访问", "切片操作", "列表方法", "元组"], 
+                starterCode: `# 项目6: 列表和元组\n\n# 创建列表\nscores = [90, 85, 78, 92, 88]\nprint(f"学生成绩列表: {scores}")\n\n# 访问列表元素\nprint(f"第一个成绩: {scores[0]}")\nprint(f"最后一个成绩: {scores[-1]}")\n\n# 切片操作\nprint(f"前三个成绩: {scores[:3]}")\n\n# 列表排序\nscores.sort()\nprint(f"排序后: {scores}")\n\n# 元组 - 不可变的列表\nperson = ("小明", 20, "计算机")\nprint(f"学生信息: {person}")` 
+            },
+            { 
+                id: "7", 
+                title: "字典和集合", 
+                description: "学习Python中的映射和集合类型，掌握字典的增删改查操作，以及集合的运算。", 
+                difficulty: "初级", 
+                icon: "database", 
+                tasks: ["字典操作", "集合运算", "通讯录管理"], 
+                knowledge: ["字典创建", "键值对访问", "字典方法", "集合", "集合运算"], 
+                starterCode: `# 项目7: 字典和集合\n\n# 创建字典\nstudent = {\n    "name": "小明",\n    "age": 20,\n    "major": "计算机科学"\n}\nprint(f"学生信息: {student}")\n\n# 访问字典元素\nprint(f"姓名: {student['name']}")\n\n# 集合运算\nset1 = {1, 2, 3, 4, 5}\nset2 = {4, 5, 6, 7, 8}\nprint(f"交集: {set1 & set2}")\nprint(f"并集: {set1 | set2}")` 
+            },
+            { 
+                id: "8", 
+                title: "函数和模块", 
+                description: "掌握函数的定义和使用，学会参数传递、返回值和作用域的概念，了解模块的导入和使用。", 
+                difficulty: "初级", 
+                icon: "function", 
+                tasks: ["函数定义与参数", "返回值和作用域", "计算器模块"], 
+                knowledge: ["函数定义", "参数传递", "返回值", "作用域", "模块导入"], 
+                starterCode: `# 项目8: 函数和模块\n\n# 定义简单函数\ndef greet():\n    print("你好! 欢迎学习Python!")\n\ngreet()\n\n# 带参数的函数\ndef greet_person(name):\n    print(f"你好, {name}!")\n\ngreet_person("小明")\n\n# 带返回值的函数\ndef add(a, b):\n    return a + b\n\nresult = add(10, 20)\nprint(f"10 + 20 = {result}")` 
+            },
+            { 
+                id: "9", 
+                title: "字符串处理", 
+                description: "学习Python字符串的常用操作，包括字符串的索引、切片、查找、替换、分割和格式化。", 
+                difficulty: "初级", 
+                icon: "type", 
+                tasks: ["字符串索引切片", "查找和替换", "词频统计"], 
+                knowledge: ["字符串索引", "字符串切片", "字符串方法", "格式化"], 
+                starterCode: `# 项目9: 字符串处理\n\n# 字符串基本操作\ntext = "Hello, Python!"\nprint(f"原字符串: {text}")\nprint(f"长度: {len(text)}")\nprint(f"大写: {text.upper()}")\nprint(f"小写: {text.lower()}")\n\n# 字符串索引和切片\nprint(f"第一个字符: {text[0]}")\nprint(f"切片[0:5]: {text[0:5]}")` 
+            },
+            { 
+                id: "10", 
+                title: "综合项目", 
+                description: "综合运用所学知识，开发一个学生信息管理系统，包含增删改查功能。", 
+                difficulty: "初级", 
+                icon: "users", 
+                tasks: ["增删改查功能", "数据持久化", "异常处理"], 
+                knowledge: ["综合应用", "文件操作", "异常处理", "程序设计"], 
+                starterCode: `# 项目10: 综合项目 - 学生信息管理系统\n\nclass StudentManager:\n    def __init__(self):\n        self.students = []\n    \n    def add_student(self, name, age, score):\n        student = {\n            "name": name,\n            "age": age,\n            "score": score\n        }\n        self.students.append(student)\n        print(f"成功添加学生: {name}")\n    \n    def display_all(self):\n        for student in self.students:\n            print(f"{student['name']}: {student['score']}")\n\n# 测试系统\nmanager = StudentManager()\nmanager.add_student("张三", 20, 92)\nmanager.add_student("李四", 19, 85)\nmanager.display_all()` 
+            }
+        ];
+
+        // 配对训练选择题数据
+        const quizData = [
+            {
+                category: "变量和数据类型",
+                questions: [
+                    {
+                        question: "Python中如何定义一个整数变量?",
+                        options: ["int x = 10", "x = 10", "var x = 10", "integer x = 10"],
+                        correct: 1,
+                        explanation: "Python使用动态类型，直接赋值即可：x = 10"
+                    },
+                    {
+                        question: "下列哪个是Python的浮点数类型?",
+                        options: ["10", "10.5", '"10"', "True"],
+                        correct: 1,
+                        explanation: "10.5是浮点数，带小数点的数字"
+                    },
+                    {
+                        question: "如何将字符串转换为整数?",
+                        options: ["str(10)", "int('10')", "float('10')", "bool('10')"],
+                        correct: 1,
+                        explanation: "int()函数可以将字符串转换为整数"
+                    }
+                ]
+            },
+            {
+                category: "运算符",
+                questions: [
+                    {
+                        question: "Python中求余运算符是?",
+                        options: ["/", "%", "//", "*"],
+                        correct: 1,
+                        explanation: "% 是求余运算符，例如 10 % 3 = 1"
+                    },
+                    {
+                        question: "5 ** 2 的结果是?",
+                        options: ["10", "25", "7", "52"],
+                        correct: 1,
+                        explanation: "** 是幂运算符，5 ** 2 = 5² = 25"
+                    },
+                    {
+                        question: "哪个运算符表示不等于?",
+                        options: ["!=", "<>", "=/", "=="],
+                        correct: 0,
+                        explanation: "!= 表示不等于，例如 5 != 3"
+                    }
+                ]
+            },
+            {
+                category: "条件语句",
+                questions: [
+                    {
+                        question: "Python中else if的正确写法是?",
+                        options: ["else if", "elsif", "elif", "elseif"],
+                        correct: 2,
+                        explanation: "Python使用elif作为else if的缩写"
+                    },
+                    {
+                        question: "以下哪个是正确的if语句?",
+                        options: ["if x > 0:", "if (x > 0)", "if x > 0 then", "if x > 0 {}"],
+                        correct: 0,
+                        explanation: "Python使用冒号结束if语句"
+                    }
+                ]
+            },
+            {
+                category: "循环结构",
+                questions: [
+                    {
+                        question: "range(1, 10) 生成的范围是?",
+                        options: ["1-10", "1-9", "0-9", "0-10"],
+                        correct: 1,
+                        explanation: "range(1, 10) 生成 1, 2, 3, ..., 9"
+                    },
+                    {
+                        question: "如何提前结束循环?",
+                        options: ["exit", "break", "stop", "end"],
+                        correct: 1,
+                        explanation: "break 语句用于提前结束循环"
+                    },
+                    {
+                        question: "for循环用于遍历什么?",
+                        options: ["数字", "列表", "字符串", "所有可迭代对象"],
+                        correct: 3,
+                        explanation: "for循环可以遍历任何可迭代对象"
+                    }
+                ]
+            },
+            {
+                category: "列表和元组",
+                questions: [
+                    {
+                        question: "列表使用什么括号?",
+                        options: ["()", "[]", "{}", "<>"],
+                        correct: 1,
+                        explanation: "列表使用方括号 []，例如 [1, 2, 3]"
+                    },
+                    {
+                        question: "如何访问列表第一个元素?",
+                        options: ["list[0]", "list[1]", "list(first)", "list.first"],
+                        correct: 0,
+                        explanation: "列表索引从0开始，第一个元素是 list[0]"
+                    },
+                    {
+                        question: "列表和元组的主要区别是?",
+                        options: ["列表可修改", "元组可修改", "没有区别", "列表更快"],
+                        correct: 0,
+                        explanation: "列表是可变的，元组是不可变的"
+                    }
+                ]
+            },
+            {
+                category: "字典",
+                questions: [
+                    {
+                        question: "字典的键可以是什么类型?",
+                        options: ["只能是数字", "只能是字符串", "不可变类型", "任意类型"],
+                        correct: 2,
+                        explanation: "字典的键必须是不可变类型，如字符串、数字、元组"
+                    },
+                    {
+                        question: "如何创建空字典?",
+                        options: ["[]", "{}", "dict()", "B和C都可以"],
+                        correct: 3,
+                        explanation: "{} 和 dict() 都可以创建空字典"
+                    },
+                    {
+                        question: "如何获取字典中不存在的键的值?",
+                        options: ["返回None", "返回0", "抛出异常", "返回空字符串"],
+                        correct: 0,
+                        explanation: "get()方法在键不存在时返回None"
+                    }
+                ]
+            },
+            {
+                category: "函数",
+                questions: [
+                    {
+                        question: "如何定义一个函数?",
+                        options: ["function myFunc()", "def myFunc()", "func myFunc()", "void myFunc()"],
+                        correct: 1,
+                        explanation: "Python使用def关键字定义函数"
+                    },
+                    {
+                        question: "函数没有return语句会返回什么?",
+                        options: ["0", "False", "None", "报错"],
+                        correct: 2,
+                        explanation: "函数没有return语句默认返回None"
+                    },
+                    {
+                        question: "如何设置默认参数值?",
+                        options: ["def func(x=10)", "def func(x:=10)", "def func(x:10)", "def func(x)10"],
+                        correct: 0,
+                        explanation: "在参数后使用 = 设置默认值"
+                    }
+                ]
+            },
+            {
+                category: "字符串",
+                questions: [
+                    {
+                        question: "字符串可以用什么引号包裹?",
+                        options: ["单引号", "双引号", "三引号", "以上都可以"],
+                        correct: 3,
+                        explanation: "字符串可以用单引号、双引号或三引号包裹"
+                    },
+                    {
+                        question: "如何获取字符串长度?",
+                        options: ["length(str)", "len(str)", "str.length", "str.size"],
+                        correct: 1,
+                        explanation: "使用len()函数获取字符串长度"
+                    },
+                    {
+                        question: "字符串切片 s[1:4] 表示?",
+                        options: ["索引1到4", "索引1到3", "索引0到4", "索引1"],
+                        correct: 1,
+                        explanation: "切片是左闭右开区间，s[1:4] 获取索引1,2,3"
+                    }
+                ]
+            }
+        ];
+
+        const learningPath = [
+            { stage: "第一阶段", title: "环境搭建", description: "配置Python开发环境", skills: ["Python安装", "IDE使用", "Hello World"] },
+            { stage: "第二阶段", title: "语法基础", description: "掌握基本语法和数据类型", skills: ["变量", "运算符", "条件语句", "循环"] },
+            { stage: "第三阶段", title: "数据结构", description: "学习Python核心数据结构", skills: ["列表", "元组", "字典", "集合"] },
+            { stage: "第四阶段", title: "函数模块", description: "掌握函数和模块化编程", skills: ["函数定义", "参数传递", "模块导入"] },
+            { stage: "第五阶段", title: "综合实战", description: "完成综合项目", skills: ["项目开发", "文件操作", "异常处理"] }
+        ];
+
+        let userData = {
+            name: "张三",
+            email: "zhangsan@example.com",
+            joinedAt: "2026-01-15",
+            totalProjects: 10,
+            completedProjects: 3,
+            learningHours: 12.5,
+            quizScores: [],
+            totalQuizzes: 0,
+            correctAnswers: 0
+        };
+
+        let completedProjects = [
+            { id: "1", title: "Python开发环境搭建", completedAt: "2026-01-20", score: 95 },
+            { id: "2", title: "变量和数据类型", completedAt: "2026-01-25", score: 92 },
+            { id: "3", title: "运算符和表达式", completedAt: "2026-02-01", score: 88 }
+        ];
+
+        let skills = [
+            { name: "Python基础", level: 85 },
+            { name: "数据结构", level: 78 },
+            { name: "函数编程", level: 65 },
+            { name: "文件操作", level: 50 },
+            { name: "异常处理", level: 30 },
+            { name: "综合应用", level: 25 }
+        ];
+
+        let currentPage = 'home';
+        let currentProject = null;
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let selectedAnswer = null;
+        let isLoggedIn = false;
+        let codeOutput = '';
+        let darkMode = false;
+        let searchQuery = '';
+
+        function loadProgress() {
+            const saved = localStorage.getItem('pythonTrainingProgress');
+            if (saved) {
+                const data = JSON.parse(saved);
+                userData = { ...userData, ...data };
+                completedProjects = data.completedProjectsList || completedProjects;
+                isLoggedIn = data.isLoggedIn || isLoggedIn;
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('pythonTrainingProgress', JSON.stringify({
+                ...userData,
+                completedProjectsList: completedProjects,
+                isLoggedIn: isLoggedIn
+            }));
+        }
+
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark');
+            document.getElementById('sun-icon').classList.toggle('hidden');
+            document.getElementById('moon-icon').classList.toggle('hidden');
+            localStorage.setItem('darkMode', darkMode);
+        }
+
+        function loadDarkMode() {
+            const saved = localStorage.getItem('darkMode');
+            if (saved === 'true') {
+                darkMode = true;
+                document.body.classList.add('dark');
+                document.getElementById('sun-icon').classList.remove('hidden');
+                document.getElementById('moon-icon').classList.add('hidden');
+            }
+        }
+
+        function getIcon(type) {
+            const icons = {
+                monitor: `<svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
+                hash: `<svg class="h-8 w-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>`,
+                calculator: `<svg class="h-8 w-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`,
+                branch: `<svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>`,
+                repeat: `<svg class="h-8 w-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>`,
+                list: `<svg class="h-8 w-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>`,
+                database: `<svg class="h-8 w-8 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>`,
+                function: `<svg class="h-8 w-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>`,
+                type: `<svg class="h-8 w-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>`,
+                users: `<svg class="h-8 w-8 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>`
+            };
+            return icons[type] || icons.monitor;
+        }
+
+        function navigate(page, projectId = null, quizCategory = null) {
+            currentPage = page;
+            if (projectId) {
+                currentProject = projects.find(p => p.id === projectId);
+            }
+            if (quizCategory) {
+                currentQuiz = quizData.find(q => q.category === quizCategory);
+                currentQuestionIndex = 0;
+                selectedAnswer = null;
+            }
+            render();
+            window.scrollTo(0, 0);
+        }
+
+        function render() {
+            const content = document.getElementById('main-content');
+            switch(currentPage) {
+                case 'home':
+                    content.innerHTML = renderHome();
+                    break;
+                case 'project':
+                    content.innerHTML = renderProject();
+                    break;
+                case 'quiz':
+                    content.innerHTML = renderQuiz();
+                    break;
+                case 'quizQuestion':
+                    content.innerHTML = renderQuizQuestion();
+                    break;
+                case 'login':
+                    content.innerHTML = renderLogin();
+                    break;
+                case 'register':
+                    content.innerHTML = renderRegister();
+                    break;
+                case 'profile':
+                    content.innerHTML = renderProfile();
+                    break;
+                default:
+                    content.innerHTML = renderHome();
+            }
+        }
+
+        function renderHome() {
+            return `
+                <section class="relative overflow-hidden bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white">
+                    <div class="absolute inset-0 bg-black/10"></div>
+                    <div class="container mx-auto px-4 py-20 relative">
+                        <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                            <div class="lg:w-1/2">
+                                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                    </svg>
+                                    <span class="text-sm font-medium">零基础学习，从这里开始</span>
+                                </div>
+                                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                                    Python基础<br>
+                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-pink-200">AI训练平台</span>
+                                </h1>
+                                <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+                                    专为大学生设计的Python学习平台，通过10个精心设计的实战项目，<br>
+                                    让你从零基础到独立编程
+                                </p>
+                                <div class="flex flex-wrap gap-4">
+                                    <button onclick="navigate('quiz')" class="px-8 py-4 bg-yellow-500 text-gray-900 rounded-xl font-semibold hover:bg-yellow-400 transition-all hover:shadow-xl shadow-lg inline-flex items-center space-x-2">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                        </svg>
+                                        <span>开始配对训练</span>
+                                    </button>
+                                    <a href="#projects" class="px-8 py-4 border-2 border-white/30 text-white rounded-xl font-semibold hover:bg-white/10 transition-all inline-flex items-center space-x-2">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                        </svg>
+                                        <span>查看训练项目</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="lg:w-1/2">
+                                <div class="bg-white/10 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20">
+                                    <div class="flex items-center space-x-2 mb-6">
+                                        <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                        <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                        <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                                    </div>
+                                    <pre class="text-sm font-mono"><code><span class="text-blue-200"># 欢迎来到Python世界</span>
+<span class="text-purple-200">def</span> <span class="text-green-200">learn_python</span>():
+    <span class="text-yellow-200">print</span>(<span class="text-pink-200">"Hello, World!"</span>)
+    <span class="text-purple-200">return</span> <span class="text-pink-200">"Success!"</span>
+<span class="text-cyan-200"># 开始你的编程之旅</span></code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-16 bg-white">
+                    <div class="container mx-auto px-4">
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl font-bold mb-4 gradient-text">为什么学习Python？</h2>
+                            <p class="text-gray-600 text-lg">Python是当今最受欢迎的编程语言之一</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl card-hover">
+                                <div class="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                                    <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3 text-gray-800">简洁易学</h3>
+                                <p class="text-gray-600 leading-relaxed">Python语法简洁清晰，接近自然语言，非常适合编程初学者快速入门。</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl card-hover">
+                                <div class="w-16 h-16 bg-purple-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-purple-500/30">
+                                    <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3 text-gray-800">应用广泛</h3>
+                                <p class="text-gray-600 leading-relaxed">Web开发、数据分析、人工智能、科学计算、自动化运维等众多领域都有广泛应用。</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl card-hover">
+                                <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-green-500/30">
+                                    <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3 text-gray-800">就业前景好</h3>
+                                <p class="text-gray-600 leading-relaxed">Python开发者薪资水平高，人才需求量大，是转行和就业的绝佳选择。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-16 bg-gradient-to-b from-gray-50 to-white">
+                    <div class="container mx-auto px-4">
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl font-bold mb-4 gradient-text">学习路径</h2>
+                            <p class="text-gray-600 text-lg">从零基础到独立开发，五步搞定Python</p>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            ${learningPath.map((path, index) => `
+                                <div class="flex items-center">
+                                    <div class="bg-white p-6 rounded-2xl shadow-lg card-hover border border-gray-100 w-64">
+                                        <div class="text-blue-500 font-bold text-sm mb-2">${path.stage}</div>
+                                        <h3 class="text-xl font-bold mb-2 text-gray-800">${path.title}</h3>
+                                        <p class="text-gray-600 text-sm mb-4">${path.description}</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            ${path.skills.map(skill => `
+                                                <span class="px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded-full font-medium">${skill}</span>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                    ${index < learningPath.length - 1 ? `
+                                        <div class="hidden md:block w-12 h-0.5 bg-gradient-to-r from-blue-300 to-purple-300 mx-2"></div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+
+                <section id="projects" class="py-16 bg-white">
+                    <div class="container mx-auto px-4">
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl font-bold mb-4 gradient-text">10个Python基础训练项目</h2>
+                            <p class="text-gray-600 text-lg">每个项目都包含详细的任务指导和AI智能助手</p>
+                        </div>
+                        <div class="max-w-md mx-auto mb-10">
+                            <div class="relative">
+                                <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                                <input 
+                                    type="text" 
+                                    id="project-search"
+                                    placeholder="搜索项目..."
+                                    onkeyup="handleSearch(event)"
+                                    class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                />
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${filterProjects().map(project => `
+                                <a href="#" onclick="navigate('project', '${project.id}')" class="group block">
+                                    <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all border border-gray-100 overflow-hidden card-hover">
+                                        <div class="p-6">
+                                            <div class="flex items-start justify-between mb-4">
+                                                <div class="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                    ${getIcon(project.icon)}
+                                                </div>
+                                                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                                                    ${project.difficulty}
+                                                </span>
+                                            </div>
+                                            <h3 class="text-xl font-bold mb-2 text-gray-800 group-hover:text-purple-600 transition-colors">${project.title}</h3>
+                                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">${project.description}</p>
+                                            <div class="space-y-2">
+                                                ${project.tasks.slice(0, 3).map((task, i) => `
+                                                    <div class="flex items-center text-sm text-gray-500">
+                                                        <div class="w-1.5 h-1.5 bg-purple-500 rounded-full mr-2"></div>
+                                                        ${task}
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                        <div class="px-6 py-4 bg-gradient-to-r from-purple-50 to-blue-50 border-t border-gray-100 flex items-center justify-between">
+                                            <span class="text-sm font-medium text-purple-600">开始学习</span>
+                                            <svg class="h-5 w-5 text-purple-500 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-16 gradient-bg text-white relative overflow-hidden">
+                    <div class="container mx-auto px-4 text-center relative">
+                        <svg class="h-20 w-20 mx-auto mb-8 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                        <h2 class="text-4xl font-bold mb-6">AI智能助手全程陪学</h2>
+                        <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+                            遇到问题？AI助手随时为你解答，提供代码建议、错误修复和知识点讲解，让学习更高效
+                        </p>
+                        <button onclick="navigate('login')" class="inline-flex items-center space-x-2 px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold hover:bg-blue-50 transition-all hover:shadow-xl shadow-lg">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                            </svg>
+                            <span>免费开始使用AI助手</span>
+                        </button>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderProject() {
+            if (!currentProject) return '';
+            return `
+                <div class="container mx-auto px-4 py-8">
+                    <div class="max-w-6xl mx-auto">
+                        <button onclick="navigate('home')" class="mb-6 inline-flex items-center text-gray-600 hover:text-purple-600 transition-colors">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            返回首页
+                        </button>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="lg:col-span-2">
+                                <div class="bg-white rounded-2xl shadow-lg p-8 mb-6 fade-in">
+                                    <div class="flex items-start justify-between mb-6">
+                                        <div class="flex items-start space-x-4">
+                                            <div class="w-16 h-16 bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl flex items-center justify-center">
+                                                ${getIcon(currentProject.icon)}
+                                            </div>
+                                            <div>
+                                                <h1 class="text-3xl font-bold mb-2 text-gray-800">${currentProject.title}</h1>
+                                                <span class="px-4 py-1.5 bg-green-100 text-green-700 text-sm font-semibold rounded-full">
+                                                    ${currentProject.difficulty}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">${currentProject.description}</p>
+                                    
+                                    <div class="mb-8">
+                                        <h3 class="text-xl font-bold mb-4 flex items-center space-x-2">
+                                            <svg class="h-5 w-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                            </svg>
+                                            <span>学习任务</span>
+                                        </h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            ${currentProject.tasks.map((task, index) => `
+                                                <div class="bg-gradient-to-br from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100">
+                                                    <div class="flex items-center space-x-3">
+                                                        <div class="w-8 h-8 bg-purple-500 text-white rounded-lg flex items-center justify-center font-bold text-sm">
+                                                            ${index + 1}
+                                                        </div>
+                                                        <span class="text-gray-700 font-medium">${task}</span>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-4 flex items-center space-x-2">
+                                            <svg class="h-5 w-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                            </svg>
+                                            <span>核心知识点</span>
+                                        </h3>
+                                        <div class="flex flex-wrap gap-3">
+                                            ${currentProject.knowledge.map(knowledge => `
+                                                <span class="px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 text-sm font-medium rounded-full border border-purple-200">${knowledge}</span>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-2xl shadow-lg p-6 fade-in">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-xl font-bold flex items-center space-x-2">
+                                            <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                            </svg>
+                                            <span>代码编辑器</span>
+                                        </h3>
+                                        <div class="flex space-x-3">
+                                            <button onclick="copyCode()" class="flex items-center space-x-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all" title="复制代码">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                                </svg>
+                                            </button>
+                                            <button onclick="runCode()" class="flex items-center space-x-2 px-5 py-2.5 gradient-bg text-white rounded-lg font-medium hover:opacity-90 transition-all shadow-lg">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                                <span>运行代码</span>
+                                            </button>
+                                            <button onclick="submitProject()" class="flex items-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg font-medium hover:opacity-90 transition-all shadow-lg">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                <span>提交项目</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <textarea id="code-editor" class="w-full h-96 bg-gray-900 text-gray-100 p-4 rounded-xl font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-purple-500" spellcheck="false">${currentProject.starterCode}</textarea>
+                                    
+                                    ${codeOutput ? `
+                                        <div class="mt-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6">
+                                            <h4 class="text-sm font-semibold mb-3 text-gray-300 flex items-center space-x-2">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                                </svg>
+                                                <span>运行结果</span>
+                                            </h4>
+                                            <pre class="text-sm whitespace-pre-wrap text-gray-300 font-mono leading-relaxed">${codeOutput}</pre>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+
+                            <div class="lg:col-span-1">
+                                <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                                    <div class="flex items-center mb-6 pb-4 border-b border-gray-100">
+                                        <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mr-3">
+                                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-gray-800">AI 学习助手</h3>
+                                            <p class="text-sm text-gray-500">24小时为你答疑</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <p class="text-gray-600 text-sm leading-relaxed">
+                                            遇到问题了吗？AI助手可以帮你：
+                                        </p>
+                                        <ul class="mt-3 space-y-2">
+                                            <li class="flex items-start space-x-2 text-sm text-gray-500">
+                                                <div class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2"></div>
+                                                <span>查看项目知识点，了解核心概念</span>
+                                            </li>
+                                            <li class="flex items-start space-x-2 text-sm text-gray-500">
+                                                <div class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2"></div>
+                                                <span>参考示例代码，理解编程思路</span>
+                                            </li>
+                                            <li class="flex items-start space-x-2 text-sm text-gray-500">
+                                                <div class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2"></div>
+                                                <span>尝试修改代码，观察输出变化</span>
+                                            </li>
+                                            <li class="flex items-start space-x-2 text-sm text-gray-500">
+                                                <div class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2"></div>
+                                                <span>完成练习任务，巩固所学知识</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="border-t border-gray-100 pt-4 mt-4">
+                                        <h4 class="text-sm font-semibold mb-3 text-gray-700">快捷提问</h4>
+                                        <div class="space-y-2">
+                                            <button onclick="quickChat('这个代码怎么运行？')" class="w-full text-left px-4 py-2.5 bg-blue-50 text-blue-700 rounded-lg text-sm hover:bg-blue-100 transition-colors">
+                                                这个代码怎么运行？
+                                            </button>
+                                            <button onclick="quickChat('代码报错了怎么办？')" class="w-full text-left px-4 py-2.5 bg-purple-50 text-purple-700 rounded-lg text-sm hover:bg-purple-100 transition-colors">
+                                                代码报错了怎么办？
+                                            </button>
+                                            <button onclick="quickChat('知识点不懂怎么办？')" class="w-full text-left px-4 py-2.5 bg-green-50 text-green-700 rounded-lg text-sm hover:bg-green-100 transition-colors">
+                                                知识点不懂怎么办？
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-6 border-t border-gray-100 pt-4">
+                                        <h4 class="text-sm font-semibold mb-3 text-gray-700">推荐资源</h4>
+                                        <div class="space-y-2">
+                                            <a href="https://docs.python.org/zh-cn/3/" target="_blank" class="block text-sm text-purple-600 hover:text-purple-800 hover:underline">
+                                                📖 Python 官方文档
+                                            </a>
+                                            <a href="https://www.runoob.com/python3/python3-tutorial.html" target="_blank" class="block text-sm text-purple-600 hover:text-purple-800 hover:underline">
+                                                📚 Python 菜鸟教程
+                                            </a>
+                                            <a href="https://www.w3school.com.cn/python3/" target="_blank" class="block text-sm text-purple-600 hover:text-purple-800 hover:underline">
+                                                🎓 W3School Python
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderQuiz() {
+            return `
+                <div class="container mx-auto px-4 py-8">
+                    <div class="max-w-6xl mx-auto">
+                        <button onclick="navigate('home')" class="mb-6 inline-flex items-center text-gray-600 hover:text-purple-600 transition-colors">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            返回首页
+                        </button>
+
+                        <div class="text-center mb-12">
+                            <h1 class="text-4xl font-bold mb-4 gradient-text">Python配对训练</h1>
+                            <p class="text-gray-600 text-lg">选择一个分类开始练习选择题，巩固你的Python知识</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${quizData.map(quiz => `
+                                <div onclick="navigate('quizQuestion', null, '${quiz.category}')" class="bg-white rounded-2xl shadow-lg p-6 card-hover cursor-pointer border-2 border-transparent hover:border-purple-500">
+                                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                                        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-2 text-gray-800">${quiz.category}</h3>
+                                    <p class="text-gray-600 text-sm mb-4">${quiz.questions.length} 道题目</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-purple-600 font-medium text-sm">开始练习</span>
+                                        <svg class="h-5 w-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderQuizQuestion() {
+            if (!currentQuiz) return '';
+            
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const progress = ((currentQuestionIndex + 1) / currentQuiz.questions.length) * 100;
+            
+            return `
+                <div class="container mx-auto px-4 py-8">
+                    <div class="max-w-3xl mx-auto">
+                        <button onclick="navigate('quiz')" class="mb-6 inline-flex items-center text-gray-600 hover:text-purple-600 transition-colors">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            返回训练列表
+                        </button>
+
+                        <div class="bg-white rounded-2xl shadow-lg p-8 fade-in">
+                            <div class="mb-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600">${currentQuiz.category}</span>
+                                    <span class="text-sm text-gray-600">${currentQuestionIndex + 1} / ${currentQuiz.questions.length}</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="gradient-bg h-2 rounded-full progress-ring" style="width: ${progress}%"></div>
+                                </div>
+                            </div>
+
+                            <h2 class="text-2xl font-bold mb-8 text-gray-800">${question.question}</h2>
+
+                            <div class="space-y-4">
+                                ${question.options.map((option, index) => `
+                                    <div onclick="selectAnswer(${index})" class="quiz-option p-4 border-2 border-gray-200 rounded-xl ${selectedAnswer === index ? (index === question.correct ? 'correct' : 'incorrect') : ''}">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 border-2 border-gray-300 rounded-lg flex items-center justify-center mr-4 font-bold text-gray-600 ${selectedAnswer === index ? 'border-transparent' : ''}">
+                                                ${String.fromCharCode(65 + index)}
+                                            </div>
+                                            <span class="text-lg">${option}</span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            ${selectedAnswer !== null ? `
+                                <div class="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-200 slide-in">
+                                    <div class="flex items-start">
+                                        <svg class="h-6 w-6 text-blue-500 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <div>
+                                            <h4 class="font-semibold text-blue-800 mb-2">答案解析</h4>
+                                            <p class="text-blue-700 text-sm">${question.explanation}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 flex justify-between">
+                                    ${currentQuestionIndex > 0 ? `
+                                        <button onclick="prevQuestion()" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+                                            上一题
+                                        </button>
+                                    ` : '<div></div>'}
+                                    
+                                    ${currentQuestionIndex < currentQuiz.questions.length - 1 ? `
+                                        <button onclick="nextQuestion()" class="px-6 py-3 gradient-bg text-white rounded-lg font-medium hover:opacity-90 transition-opacity">
+                                            下一题
+                                        </button>
+                                    ` : `
+                                        <button onclick="finishQuiz()" class="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors">
+                                            完成训练
+                                        </button>
+                                    `}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectAnswer(index) {
+            selectedAnswer = index;
+            render();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            selectedAnswer = null;
+            render();
+        }
+
+        function prevQuestion() {
+            currentQuestionIndex--;
+            selectedAnswer = null;
+            render();
+        }
+
+        function finishQuiz() {
+            const correct = selectedAnswer === currentQuiz.questions[currentQuestionIndex].correct;
+            if (correct) {
+                userData.correctAnswers++;
+            }
+            userData.totalQuizzes++;
+            
+            userData.quizScores.push({
+                category: currentQuiz.category,
+                score: correct ? 1 : 0,
+                date: new Date().toISOString()
+            });
+            
+            saveProgress();
+            alert(`🎉 训练完成！\n\n分类：${currentQuiz.category}\n正确答案：${userData.correctAnswers}/${userData.totalQuizzes}`);
+            navigate('quiz');
+        }
+
+        function renderLogin() {
+            return `
+                <div class="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 flex items-center justify-center py-12 px-4">
+                    <div class="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 fade-in">
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center justify-center w-16 h-16 gradient-bg rounded-full mb-4 shadow-lg">
+                                <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                </svg>
+                            </div>
+                            <h1 class="text-3xl font-bold text-gray-800 mb-2">登录</h1>
+                            <p class="text-gray-600">欢迎回来，继续你的Python学习之旅</p>
+                        </div>
+
+                        <form onsubmit="handleLogin(event)">
+                            <div class="mb-6">
+                                <label for="login-email" class="block text-sm font-medium text-gray-700 mb-2">
+                                    邮箱
+                                </label>
+                                <input
+                                    type="email"
+                                    id="login-email"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    placeholder="请输入邮箱"
+                                    value="test@example.com"
+                                />
+                            </div>
+
+                            <div class="mb-6">
+                                <label for="login-password" class="block text-sm font-medium text-gray-700 mb-2">
+                                    密码
+                                </label>
+                                <input
+                                    type="password"
+                                    id="login-password"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    placeholder="请输入密码"
+                                    value="password123"
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="w-full gradient-bg text-white py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg"
+                            >
+                                登录
+                            </button>
+
+                            <div class="mt-6 text-center">
+                                <p class="text-sm text-gray-600">
+                                    还没有账号？
+                                    <a href="#" onclick="navigate('register')" class="font-medium text-purple-600 hover:text-purple-500 ml-1">
+                                        立即注册
+                                    </a>
+                                </p>
+                            </div>
+
+                            <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+                                <p class="text-xs text-gray-600 mb-2">测试账号：</p>
+                                <p class="text-sm text-gray-800">邮箱: test@example.com</p>
+                                <p class="text-sm text-gray-800">密码: password123</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRegister() {
+            return `
+                <div class="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 flex items-center justify-center py-12 px-4">
+                    <div class="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 fade-in">
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center justify-center w-16 h-16 gradient-bg rounded-full mb-4 shadow-lg">
+                                <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                </svg>
+                            </div>
+                            <h1 class="text-3xl font-bold text-gray-800 mb-2">注册</h1>
+                            <p class="text-gray-600">加入我们，开始你的Python学习之旅</p>
+                        </div>
+
+                        <form onsubmit="handleRegister(event)">
+                            <div class="mb-4">
+                                <label for="register-name" class="block text-sm font-medium text-gray-700 mb-2">
+                                    姓名
+                                </label>
+                                <input
+                                    type="text"
+                                    id="register-name"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    placeholder="请输入姓名"
+                                />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="register-email" class="block text-sm font-medium text-gray-700 mb-2">
+                                    邮箱
+                                </label>
+                                <input
+                                    type="email"
+                                    id="register-email"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    placeholder="请输入邮箱"
+                                />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="register-password" class="block text-sm font-medium text-gray-700 mb-2">
+                                    密码
+                                </label>
+                                <input
+                                    type="password"
+                                    id="register-password"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    placeholder="请输入密码（至少6位）"
+                                    minlength="6"
+                                />
+                            </div>
+
+                            <div class="mb-6">
+                                <label for="register-confirm" class="block text-sm font-medium text-gray-700 mb-2">
+                                    确认密码
+                                </label>
+                                <input
+                                    type="password"
+                                    id="register-confirm"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                    placeholder="请再次输入密码"
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="w-full gradient-bg text-white py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg"
+                            >
+                                注册
+                            </button>
+
+                            <div class="mt-6 text-center">
+                                <p class="text-sm text-gray-600">
+                                    已有账号？
+                                    <a href="#" onclick="navigate('login')" class="font-medium text-purple-600 hover:text-purple-500 ml-1">
+                                        立即登录
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProfile() {
+            const completionRate = Math.round((userData.completedProjects / userData.totalProjects) * 100);
+            const quizAccuracy = userData.totalQuizzes > 0 ? Math.round((userData.correctAnswers / userData.totalQuizzes) * 100) : 0;
+            
+            return `
+                <div class="container mx-auto px-4 py-8">
+                    <div class="max-w-6xl mx-auto">
+                        <h1 class="text-3xl font-bold mb-8 gradient-text">学习中心</h1>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center">
+                                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-2xl font-bold text-purple-600">${userData.completedProjects}/${userData.totalProjects}</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">已完成项目</h3>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="gradient-bg h-2 rounded-full" style="width: ${completionRate}%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">完成率 ${completionRate}%</p>
+                            </div>
+
+                            <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-2xl font-bold text-green-600">${userData.correctAnswers}/${userData.totalQuizzes}</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">配对训练</h3>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: ${quizAccuracy}%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">正确率 ${quizAccuracy}%</p>
+                            </div>
+
+                            <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+                                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-2xl font-bold text-blue-600">${userData.learningHours}h</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">学习时长</h3>
+                                <p class="text-sm text-gray-600 mt-2">继续保持！</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-white rounded-2xl shadow-lg p-6">
+                                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                    <svg class="h-6 w-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    已完成项目
+                                </h2>
+                                <div class="space-y-3">
+                                    ${completedProjects.length > 0 ? completedProjects.map(project => `
+                                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex items-center">
+                                                <svg class="h-5 w-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                <span class="text-gray-700">${project.title}</span>
+                                            </div>
+                                            <span class="text-sm text-gray-500">${project.completedAt}</span>
+                                        </div>
+                                    `).join('') : '<p class="text-gray-500 text-center py-8">还没有完成任何项目</p>'}
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-2xl shadow-lg p-6">
+                                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                    <svg class="h-6 w-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    技能评估
+                                </h2>
+                                <div class="space-y-4">
+                                    ${skills.map(skill => `
+                                        <div>
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">${skill.name}</span>
+                                                <span class="text-sm font-medium text-purple-600">${skill.level}%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="gradient-bg h-2 rounded-full" style="width: ${skill.level}%"></div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-100">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">💡 学习建议</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center mr-3">
+                                        <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800 mb-1">坚持每日练习</h3>
+                                        <p class="text-sm text-gray-600">每天完成至少一个项目或一套练习题</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center mr-3">
+                                        <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800 mb-1">动手实践</h3>
+                                        <p class="text-sm text-gray-600">不要只看代码，要自己动手编写和运行</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            if (email === 'test@example.com' && password === 'password123') {
+                isLoggedIn = true;
+                saveProgress();
+                alert('🎉 登录成功！欢迎回来继续学习！');
+                navigate('profile');
+            } else {
+                alert('❌ 邮箱或密码错误！\n\n测试账号：\n邮箱: test@example.com\n密码: password123');
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            if (password !== confirm) {
+                alert('❌ 两次输入的密码不一致！');
+                return;
+            }
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            userData.name = name || '新用户';
+            userData.email = email || 'user@example.com';
+            isLoggedIn = true;
+            saveProgress();
+            alert('🎉 注册成功！欢迎加入Python学习大家庭！');
+            setTimeout(() => navigate('profile'), 1500);
+        }
+
+        function runCode() {
+            const code = document.getElementById('code-editor').value;
+            codeOutput = `>>> 代码运行成功！
+
+请注意: 这是一个模拟的Python环境。
+在实际使用时，代码将在真实的Python解释器中运行。
+
+--- 你的代码 ---
+${code}
+
+--- 建议 ---
+1. 仔细阅读代码注释
+2. 尝试修改参数，观察结果变化
+3. 遇到问题时，可以向AI助手提问`;
+            render();
+        }
+
+        function submitProject() {
+            if (currentProject) {
+                const isCompleted = completedProjects.some(p => p.id === currentProject.id);
+                if (!isCompleted) {
+                    completedProjects.push({
+                        id: currentProject.id,
+                        title: currentProject.title,
+                        completedAt: new Date().toISOString().split('T')[0],
+                        score: Math.floor(Math.random() * 15) + 85
+                    });
+                    userData.completedProjects++;
+                    saveProgress();
+                }
+            }
+            codeOutput = `🎉 恭喜！项目提交成功！
+
+你的学习进度已保存。
+当前完成项目数: ${userData.completedProjects}/${userData.totalProjects}
+继续加油，完成更多项目吧！`;
+            render();
+        }
+
+        function quickChat(message) {
+            let response = `好的，我理解了你的问题。让我来帮你解答...`;
+            if (message.includes('错误') || message.includes('报错')) {
+                response = `遇到错误了吗？请仔细检查：
+1. 语法是否正确
+2. 缩进是否一致
+3. 括号是否匹配
+4. 变量名是否正确`;
+            } else if (message.includes('怎么') || message.includes('如何')) {
+                response = `让我来教你：
+1. 首先理解问题的核心
+2. 参考示例代码的结构
+3. 按照步骤实现
+4. 运行测试验证`;
+            } else if (message.includes('不懂') || message.includes('帮助')) {
+                response = `别担心，学习是一个渐进的过程。建议：
+1. 先通读代码，理解整体结构
+2. 逐行分析代码的作用
+3. 运行代码观察输出
+4. 多练习，多思考`;
+            }
+            alert(`AI助手说: ${response}`);
+        }
+
+        function copyCode() {
+            const code = document.getElementById('code-editor').value;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ 代码已复制到剪贴板!');
+            });
+        }
+
+        function filterProjects() {
+            if (!searchQuery.trim()) return projects;
+            return projects.filter(p => 
+                p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                p.tasks.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
+            );
+        }
+
+        function handleSearch(event) {
+            searchQuery = event.target.value;
+            render();
+        }
+
+        // 初始化
+        loadProgress();
+        loadDarkMode();
+        render();
+    </script>
+</body>
+</html>
