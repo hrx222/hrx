@@ -179,7 +179,39 @@
                 icon: "monitor", 
                 tasks: ["安装Python 3.x", "配置开发环境", "第一个Hello World程序"], 
                 knowledge: ["Python安装", "环境变量", "IDE使用", "print函数"], 
-                starterCode: `# 项目1: Python开发环境搭建\n# 你的第一个Python程序\n\n# 使用print()函数输出Hello World\nprint("Hello, World!")\n\n# 尝试修改下面的代码，输出你喜欢的文字\nmessage = "欢迎学习Python!"\nprint(message)\n\n# 运行代码看看效果\nprint("Python环境搭建成功!")` 
+                starterCode: `# 项目1: Python开发环境搭建\n# 你的第一个Python程序\n\n# 使用print()函数输出Hello World\nprint("Hello, World!")\n\n# 尝试修改下面的代码，输出你喜欢的文字\nmessage = "欢迎学习Python!"\nprint(message)\n\n# 运行代码看看效果\nprint("Python环境搭建成功!")`,
+                quiz: [
+                    {
+                        question: "Python的官方网站是?",
+                        options: ["www.python.org", "www.python.com", "www.python.net", "www.python.cn"],
+                        correct: 0,
+                        explanation: "Python官方网站是 www.python.org"
+                    },
+                    {
+                        question: "在命令行中运行Python程序的命令是?",
+                        options: ["python myfile.py", "run myfile.py", "execute myfile.py", "start myfile.py"],
+                        correct: 0,
+                        explanation: "使用 python 命令加上文件名来运行Python程序"
+                    },
+                    {
+                        question: "Python中使用哪个函数输出内容?",
+                        options: ["output()", "print()", "console.log()", "echo()"],
+                        correct: 1,
+                        explanation: "print()函数用于输出内容到控制台"
+                    },
+                    {
+                        question: "Python文件的扩展名通常是?",
+                        options: [".py", ".python", ".py3", ".p"],
+                        correct: 0,
+                        explanation: "Python文件扩展名为 .py"
+                    },
+                    {
+                        question: "如何查看Python版本?",
+                        options: ["python -v", "python --version", "python version", "python -version"],
+                        correct: 1,
+                        explanation: "使用 python --version 查看Python版本"
+                    }
+                ]
             },
             { 
                 id: "2", 
@@ -189,7 +221,39 @@
                 icon: "hash", 
                 tasks: ["整数和浮点数", "字符串操作", "布尔值与数据类型转换"], 
                 knowledge: ["变量命名", "数据类型", "type()函数", "类型转换"], 
-                starterCode: `# 项目2: 变量和数据类型\n\n# 整数类型\nage = 20\nprint(f"年龄: {age}, 类型: {type(age)}")\n\n# 浮点数类型\nheight = 1.75\nprint(f"身高: {height}, 类型: {type(height)}")\n\n# 字符串类型\nname = "小明"\nprint(f"姓名: {name}, 类型: {type(name)}")\n\n# 布尔类型\nis_student = True\nprint(f"是学生: {is_student}, 类型: {type(is_student)}")\n\n# 数据类型转换\nnum_str = "100"\nnum_int = int(num_str)\nprint(f"字符串转整数: {num_int + 50}")` 
+                starterCode: `# 项目2: 变量和数据类型\n\n# 整数类型\nage = 20\nprint(f"年龄: {age}, 类型: {type(age)}")\n\n# 浮点数类型\nheight = 1.75\nprint(f"身高: {height}, 类型: {type(height)}")\n\n# 字符串类型\nname = "小明"\nprint(f"姓名: {name}, 类型: {type(name)}")\n\n# 布尔类型\nis_student = True\nprint(f"是学生: {is_student}, 类型: {type(is_student)}")\n\n# 数据类型转换\nnum_str = "100"\nnum_int = int(num_str)\nprint(f"字符串转整数: {num_int + 50}")`,
+                quiz: [
+                    {
+                        question: "Python中如何定义一个整数变量?",
+                        options: ["int x = 10", "x = 10", "var x = 10", "integer x = 10"],
+                        correct: 1,
+                        explanation: "Python使用动态类型，直接赋值即可：x = 10"
+                    },
+                    {
+                        question: "下列哪个是Python的浮点数类型?",
+                        options: ["10", "10.5", '"10"', "True"],
+                        correct: 1,
+                        explanation: "10.5是浮点数，带小数点的数字"
+                    },
+                    {
+                        question: "如何将字符串转换为整数?",
+                        options: ["str(10)", "int('10')", "float('10')", "bool('10')"],
+                        correct: 1,
+                        explanation: "int()函数可以将字符串转换为整数"
+                    },
+                    {
+                        question: "type()函数的作用是?",
+                        options: ["输出内容", "获取变量类型", "定义变量", "循环操作"],
+                        correct: 1,
+                        explanation: "type()函数用于获取变量的数据类型"
+                    },
+                    {
+                        question: "Python中的布尔值有几个?",
+                        options: ["1个", "2个", "3个", "多个"],
+                        correct: 1,
+                        explanation: "布尔值只有两个：True 和 False"
+                    }
+                ]
             },
             { 
                 id: "3", 
@@ -199,7 +263,39 @@
                 icon: "calculator", 
                 tasks: ["算术运算符", "比较和逻辑运算符", "成绩评级程序"], 
                 knowledge: ["算术运算符", "比较运算符", "逻辑运算符", "运算符优先级"], 
-                starterCode: `# 项目3: 运算符和表达式\n\na, b = 10, 3\nprint(f"加法: {a} + {b} = {a + b}")\nprint(f"减法: {a} - {b} = {a - b}")\nprint(f"乘法: {a} * {b} = {a * b}")\nprint(f"除法: {a} / {b} = {a / b}")\n\n# 比较运算符\nscore = 85\nprint(f"成绩 >= 60: {score >= 60}")\n\n# 逻辑运算符\nis_pass = score >= 60\nis_excellent = score >= 90\nprint(f"及格且优秀: {is_pass and is_excellent}")` 
+                starterCode: `# 项目3: 运算符和表达式\n\na, b = 10, 3\nprint(f"加法: {a} + {b} = {a + b}")\nprint(f"减法: {a} - {b} = {a - b}")\nprint(f"乘法: {a} * {b} = {a * b}")\nprint(f"除法: {a} / {b} = {a / b}")\n\n# 比较运算符\nscore = 85\nprint(f"成绩 >= 60: {score >= 60}")\n\n# 逻辑运算符\nis_pass = score >= 60\nis_excellent = score >= 90\nprint(f"及格且优秀: {is_pass and is_excellent}")`,
+                quiz: [
+                    {
+                        question: "Python中求余运算符是?",
+                        options: ["/", "%", "//", "*"],
+                        correct: 1,
+                        explanation: "% 是求余运算符，例如 10 % 3 = 1"
+                    },
+                    {
+                        question: "5 ** 2 的结果是?",
+                        options: ["10", "25", "7", "52"],
+                        correct: 1,
+                        explanation: "** 是幂运算符，5 ** 2 = 5² = 25"
+                    },
+                    {
+                        question: "哪个运算符表示不等于?",
+                        options: ["!=", "<>", "=/", "=="],
+                        correct: 0,
+                        explanation: "!= 表示不等于，例如 5 != 3"
+                    },
+                    {
+                        question: "3 // 2 的结果是?",
+                        options: ["1.5", "1", "2", "0"],
+                        correct: 1,
+                        explanation: "// 是整除运算符，3 // 2 = 1"
+                    },
+                    {
+                        question: "and 运算符的含义是?",
+                        options: ["或", "与", "非", "异或"],
+                        correct: 1,
+                        explanation: "and 是逻辑与运算符，两边都为True时结果才为True"
+                    }
+                ]
             },
             { 
                 id: "4", 
@@ -209,7 +305,39 @@
                 icon: "branch", 
                 tasks: ["if语句基础", "多重条件判断", "猜数字游戏"], 
                 knowledge: ["if语句", "else子句", "elif子句", "嵌套条件"], 
-                starterCode: `# 项目4: 条件语句\n\n# 简单的if语句\nage = 18\nif age >= 18:\n    print("你已经成年了!")\n\n# if-else语句\nscore = 75\nif score >= 60:\n    print("及格!")\nelse:\n    print("不及格!")\n\n# if-elif-else语句\ngrade = 85\nif grade >= 90:\n    print("优秀 (A)")\nelif grade >= 80:\n    print("良好 (B)")\nelif grade >= 70:\n    print("中等 (C)")\nelse:\n    print("不及格")` 
+                starterCode: `# 项目4: 条件语句\n\n# 简单的if语句\nage = 18\nif age >= 18:\n    print("你已经成年了!")\n\n# if-else语句\nscore = 75\nif score >= 60:\n    print("及格!")\nelse:\n    print("不及格!")\n\n# if-elif-else语句\ngrade = 85\nif grade >= 90:\n    print("优秀 (A)")\nelif grade >= 80:\n    print("良好 (B)")\nelif grade >= 70:\n    print("中等 (C)")\nelse:\n    print("不及格")`,
+                quiz: [
+                    {
+                        question: "Python中else if的正确写法是?",
+                        options: ["else if", "elsif", "elif", "elseif"],
+                        correct: 2,
+                        explanation: "Python使用elif作为else if的缩写"
+                    },
+                    {
+                        question: "以下哪个是正确的if语句?",
+                        options: ["if x > 0:", "if (x > 0)", "if x > 0 then", "if x > 0 {}"],
+                        correct: 0,
+                        explanation: "Python使用冒号结束if语句"
+                    },
+                    {
+                        question: "在if语句中，条件表达式应该返回什么类型?",
+                        options: ["整数", "字符串", "布尔值", "列表"],
+                        correct: 2,
+                        explanation: "条件表达式必须返回布尔值True或False"
+                    },
+                    {
+                        question: "elif语句可以单独使用吗?",
+                        options: ["可以", "不可以，必须跟随if", "看情况", "取决于Python版本"],
+                        correct: 1,
+                        explanation: "elif必须跟随在if或另一个elif之后"
+                    },
+                    {
+                        question: "else语句的作用是?",
+                        options: ["如果前面条件都不满足则执行", "总是执行", "条件为True时执行", "循环控制"],
+                        correct: 0,
+                        explanation: "else在所有前面的条件都不满足时执行"
+                    }
+                ]
             },
             { 
                 id: "5", 
@@ -219,7 +347,39 @@
                 icon: "repeat", 
                 tasks: ["for循环遍历", "while循环", "九九乘法表"], 
                 knowledge: ["for循环", "while循环", "break", "continue", "range()"], 
-                starterCode: `# 项目5: 循环结构\n\n# for循环遍历列表\nfruits = ["苹果", "香蕉", "橙子"]\nfor fruit in fruits:\n    print(f"我喜欢吃: {fruit}")\n\n# 使用range()函数\nfor i in range(1, 6):\n    print(f"数字: {i}")\n\n# while循环\ncount = 0\nwhile count < 5:\n    print(f"count = {count}")\n    count += 1\n\n# 九九乘法表\nfor i in range(1, 10):\n    for j in range(1, i + 1):\n        print(f"{j}*{i}={i*j}", end="\\t")\n    print()` 
+                starterCode: `# 项目5: 循环结构\n\n# for循环遍历列表\nfruits = ["苹果", "香蕉", "橙子"]\nfor fruit in fruits:\n    print(f"我喜欢吃: {fruit}")\n\n# 使用range()函数\nfor i in range(1, 6):\n    print(f"数字: {i}")\n\n# while循环\ncount = 0\nwhile count < 5:\n    print(f"count = {count}")\n    count += 1\n\n# 九九乘法表\nfor i in range(1, 10):\n    for j in range(1, i + 1):\n        print(f"{j}*{i}={i*j}", end="\\t")\n    print()`,
+                quiz: [
+                    {
+                        question: "range(1, 10) 生成的范围是?",
+                        options: ["1-10", "1-9", "0-9", "0-10"],
+                        correct: 1,
+                        explanation: "range(1, 10) 生成 1, 2, 3, ..., 9"
+                    },
+                    {
+                        question: "如何提前结束循环?",
+                        options: ["exit", "break", "stop", "end"],
+                        correct: 1,
+                        explanation: "break 语句用于提前结束循环"
+                    },
+                    {
+                        question: "continue语句的作用是?",
+                        options: ["结束循环", "跳过当前迭代", "暂停循环", "重启循环"],
+                        correct: 1,
+                        explanation: "continue跳过当前迭代，继续下一次循环"
+                    },
+                    {
+                        question: "for循环可以遍历哪种数据类型?",
+                        options: ["只能列表", "只能字符串", "可迭代对象", "只能数字"],
+                        correct: 2,
+                        explanation: "for循环可以遍历任何可迭代对象（列表、字符串、元组等）"
+                    },
+                    {
+                        question: "while循环的条件什么时候检查?",
+                        options: ["循环执行后", "循环执行前", "循环执行中", "随机检查"],
+                        correct: 1,
+                        explanation: "while循环在每次执行前检查条件"
+                    }
+                ]
             },
             { 
                 id: "6", 
@@ -229,7 +389,39 @@
                 icon: "list", 
                 tasks: ["列表增删改查", "切片操作", "学生成绩管理"], 
                 knowledge: ["列表创建", "索引访问", "切片操作", "列表方法", "元组"], 
-                starterCode: `# 项目6: 列表和元组\n\n# 创建列表\nscores = [90, 85, 78, 92, 88]\nprint(f"学生成绩列表: {scores}")\n\n# 访问列表元素\nprint(f"第一个成绩: {scores[0]}")\nprint(f"最后一个成绩: {scores[-1]}")\n\n# 切片操作\nprint(f"前三个成绩: {scores[:3]}")\n\n# 列表排序\nscores.sort()\nprint(f"排序后: {scores}")\n\n# 元组 - 不可变的列表\nperson = ("小明", 20, "计算机")\nprint(f"学生信息: {person}")` 
+                starterCode: `# 项目6: 列表和元组\n\n# 创建列表\nscores = [90, 85, 78, 92, 88]\nprint(f"学生成绩列表: {scores}")\n\n# 访问列表元素\nprint(f"第一个成绩: {scores[0]}")\nprint(f"最后一个成绩: {scores[-1]}")\n\n# 切片操作\nprint(f"前三个成绩: {scores[:3]}")\n\n# 列表排序\nscores.sort()\nprint(f"排序后: {scores}")\n\n# 元组 - 不可变的列表\nperson = ("小明", 20, "计算机")\nprint(f"学生信息: {person}")`,
+                quiz: [
+                    {
+                        question: "如何创建一个空列表?",
+                        options: ["list = []", "list = {}", "list = ()", "list = ''"],
+                        correct: 0,
+                        explanation: "使用方括号 [] 创建空列表"
+                    },
+                    {
+                        question: "列表和元组的主要区别是什么?",
+                        options: ["大小不同", "元组不可变", "列表只能存数字", "没有区别"],
+                        correct: 1,
+                        explanation: "元组是不可变的，创建后不能修改"
+                    },
+                    {
+                        question: "访问列表的第一个元素用什么索引?",
+                        options: ["1", "0", "-1", "first"],
+                        correct: 1,
+                        explanation: "Python使用0-based索引，第一个元素索引为0"
+                    },
+                    {
+                        question: "scores[-1]表示?",
+                        options: ["第一个元素", "最后一个元素", "倒数第二个元素", "错误用法"],
+                        correct: 1,
+                        explanation: "负索引表示从末尾开始计数，-1是最后一个元素"
+                    },
+                    {
+                        question: "列表的append()方法作用是?",
+                        options: ["删除元素", "在末尾添加元素", "插入到指定位置", "排序"],
+                        correct: 1,
+                        explanation: "append()在列表末尾添加一个元素"
+                    }
+                ]
             },
             { 
                 id: "7", 
@@ -239,7 +431,39 @@
                 icon: "database", 
                 tasks: ["字典操作", "集合运算", "通讯录管理"], 
                 knowledge: ["字典创建", "键值对访问", "字典方法", "集合", "集合运算"], 
-                starterCode: `# 项目7: 字典和集合\n\n# 创建字典\nstudent = {\n    "name": "小明",\n    "age": 20,\n    "major": "计算机科学"\n}\nprint(f"学生信息: {student}")\n\n# 访问字典元素\nprint(f"姓名: {student['name']}")\n\n# 集合运算\nset1 = {1, 2, 3, 4, 5}\nset2 = {4, 5, 6, 7, 8}\nprint(f"交集: {set1 & set2}")\nprint(f"并集: {set1 | set2}")` 
+                starterCode: `# 项目7: 字典和集合\n\n# 创建字典\nstudent = {\n    "name": "小明",\n    "age": 20,\n    "major": "计算机科学"\n}\nprint(f"学生信息: {student}")\n\n# 访问字典元素\nprint(f"姓名: {student['name']}")\n\n# 集合运算\nset1 = {1, 2, 3, 4, 5}\nset2 = {4, 5, 6, 7, 8}\nprint(f"交集: {set1 & set2}")\nprint(f"并集: {set1 | set2}")`,
+                quiz: [
+                    {
+                        question: "字典使用什么符号创建?",
+                        options: ["[]", "{}", "()", "<>"],
+                        correct: 1,
+                        explanation: "字典使用大括号 {} 创建"
+                    },
+                    {
+                        question: "字典中如何访问值?",
+                        options: ["dict[key]", "dict(key)", "dict.key", "dict->key"],
+                        correct: 0,
+                        explanation: "使用方括号加键名访问字典的值"
+                    },
+                    {
+                        question: "集合中可以有重复元素吗?",
+                        options: ["可以", "不可以", "取决于元素类型", "取决于Python版本"],
+                        correct: 1,
+                        explanation: "集合中的元素是唯一的，不能重复"
+                    },
+                    {
+                        question: "如何检查字典中是否存在某个键?",
+                        options: ["key in dict", "dict.contains(key)", "dict.has(key)", "key exists dict"],
+                        correct: 0,
+                        explanation: "使用 in 关键字检查键是否存在"
+                    },
+                    {
+                        question: "两个集合的交集用什么运算符?",
+                        options: ["+", "-", "&", "|"],
+                        correct: 2,
+                        explanation: "& 运算符用于求两个集合的交集"
+                    }
+                ]
             },
             { 
                 id: "8", 
@@ -249,7 +473,39 @@
                 icon: "function", 
                 tasks: ["函数定义与参数", "返回值和作用域", "计算器模块"], 
                 knowledge: ["函数定义", "参数传递", "返回值", "作用域", "模块导入"], 
-                starterCode: `# 项目8: 函数和模块\n\n# 定义简单函数\ndef greet():\n    print("你好! 欢迎学习Python!")\n\ngreet()\n\n# 带参数的函数\ndef greet_person(name):\n    print(f"你好, {name}!")\n\ngreet_person("小明")\n\n# 带返回值的函数\ndef add(a, b):\n    return a + b\n\nresult = add(10, 20)\nprint(f"10 + 20 = {result}")` 
+                starterCode: `# 项目8: 函数和模块\n\n# 定义简单函数\ndef greet():\n    print("你好! 欢迎学习Python!")\n\ngreet()\n\n# 带参数的函数\ndef greet_person(name):\n    print(f"你好, {name}!")\n\ngreet_person("小明")\n\n# 带返回值的函数\ndef add(a, b):\n    return a + b\n\nresult = add(10, 20)\nprint(f"10 + 20 = {result}")`,
+                quiz: [
+                    {
+                        question: "Python中如何定义函数?",
+                        options: ["function name() {}", "def name():", "func name():", "define name()"],
+                        correct: 1,
+                        explanation: "使用 def 关键字定义函数"
+                    },
+                    {
+                        question: "如何返回函数结果?",
+                        options: ["return value", "output value", "send value", "give value"],
+                        correct: 0,
+                        explanation: "使用 return 语句返回函数结果"
+                    },
+                    {
+                        question: "函数可以有多个参数吗?",
+                        options: ["不可以", "可以", "最多3个", "取决于Python版本"],
+                        correct: 1,
+                        explanation: "函数可以有任意数量的参数"
+                    },
+                    {
+                        question: "如何导入模块?",
+                        options: ["import module", "include module", "require module", "load module"],
+                        correct: 0,
+                        explanation: "使用 import 语句导入模块"
+                    },
+                    {
+                        question: "函数内部定义的变量是什么作用域?",
+                        options: ["全局作用域", "局部作用域", "模块作用域", "类作用域"],
+                        correct: 1,
+                        explanation: "函数内部定义的变量是局部变量，作用域仅限于函数内部"
+                    }
+                ]
             },
             { 
                 id: "9", 
@@ -259,7 +515,39 @@
                 icon: "type", 
                 tasks: ["字符串索引切片", "查找和替换", "词频统计"], 
                 knowledge: ["字符串索引", "字符串切片", "字符串方法", "格式化"], 
-                starterCode: `# 项目9: 字符串处理\n\n# 字符串基本操作\ntext = "Hello, Python!"\nprint(f"原字符串: {text}")\nprint(f"长度: {len(text)}")\nprint(f"大写: {text.upper()}")\nprint(f"小写: {text.lower()}")\n\n# 字符串索引和切片\nprint(f"第一个字符: {text[0]}")\nprint(f"切片[0:5]: {text[0:5]}")` 
+                starterCode: `# 项目9: 字符串处理\n\n# 字符串基本操作\ntext = "Hello, Python!"\nprint(f"原字符串: {text}")\nprint(f"长度: {len(text)}")\nprint(f"大写: {text.upper()}")\nprint(f"小写: {text.lower()}")\n\n# 字符串索引和切片\nprint(f"第一个字符: {text[0]}")\nprint(f"切片[0:5]: {text[0:5]}")`,
+                quiz: [
+                    {
+                        question: "如何获取字符串长度?",
+                        options: ["text.length()", "len(text)", "text.len()", "length(text)"],
+                        correct: 1,
+                        explanation: "使用 len() 函数获取字符串长度"
+                    },
+                    {
+                        question: "text.upper() 的作用是?",
+                        options: ["转为小写", "转为大写", "首字母大写", "反转字符串"],
+                        correct: 1,
+                        explanation: "upper() 将字符串转为大写"
+                    },
+                    {
+                        question: "如何替换字符串中的子串?",
+                        options: ["text.replace(old, new)", "text.change(old, new)", "text.swap(old, new)", "text.substitute(old, new)"],
+                        correct: 0,
+                        explanation: "使用 replace() 方法替换子串"
+                    },
+                    {
+                        question: "text.find('abc') 返回什么?",
+                        options: ["布尔值", "子串位置", "子串本身", "子串长度"],
+                        correct: 1,
+                        explanation: "find() 返回子串第一次出现的索引位置"
+                    },
+                    {
+                        question: "f-string的格式是?",
+                        options: ["f'...'", "'...'", '"..."', "format('...')"],
+                        correct: 0,
+                        explanation: "f-string 使用 f'' 或 f\"\" 格式"
+                    }
+                ]
             },
             { 
                 id: "10", 
@@ -269,7 +557,39 @@
                 icon: "users", 
                 tasks: ["增删改查功能", "数据持久化", "异常处理"], 
                 knowledge: ["综合应用", "文件操作", "异常处理", "程序设计"], 
-                starterCode: `# 项目10: 综合项目 - 学生信息管理系统\n\nclass StudentManager:\n    def __init__(self):\n        self.students = []\n    \n    def add_student(self, name, age, score):\n        student = {\n            "name": name,\n            "age": age,\n            "score": score\n        }\n        self.students.append(student)\n        print(f"成功添加学生: {name}")\n    \n    def display_all(self):\n        for student in self.students:\n            print(f"{student['name']}: {student['score']}")\n\n# 测试系统\nmanager = StudentManager()\nmanager.add_student("张三", 20, 92)\nmanager.add_student("李四", 19, 85)\nmanager.display_all()` 
+                starterCode: `# 项目10: 综合项目 - 学生信息管理系统\n\nclass StudentManager:\n    def __init__(self):\n        self.students = []\n    \n    def add_student(self, name, age, score):\n        student = {\n            "name": name,\n            "age": age,\n            "score": score\n        }\n        self.students.append(student)\n        print(f"成功添加学生: {name}")\n    \n    def display_all(self):\n        for student in self.students:\n            print(f"{student['name']}: {student['score']}")\n\n# 测试系统\nmanager = StudentManager()\nmanager.add_student("张三", 20, 92)\nmanager.add_student("李四", 19, 85)\nmanager.display_all()`,
+                quiz: [
+                    {
+                        question: "Python中如何定义类?",
+                        options: ["class Name {}", "class Name:", "def class Name:", "class Name():"],
+                        correct: 1,
+                        explanation: "使用 class 关键字加类名加冒号定义类"
+                    },
+                    {
+                        question: "__init__ 方法的作用是?",
+                        options: ["定义函数", "初始化对象", "删除对象", "打印对象"],
+                        correct: 1,
+                        explanation: "__init__ 是构造方法，用于初始化对象"
+                    },
+                    {
+                        question: "如何处理异常?",
+                        options: ["try...catch", "try...except", "catch...except", "exception...handle"],
+                        correct: 1,
+                        explanation: "Python使用 try...except 处理异常"
+                    },
+                    {
+                        question: "如何打开文件?",
+                        options: ["open('file.txt')", "file.open('file.txt')", "read('file.txt')", "load('file.txt')"],
+                        correct: 0,
+                        explanation: "使用 open() 函数打开文件"
+                    },
+                    {
+                        question: "with语句的作用是?",
+                        options: ["循环控制", "自动关闭资源", "条件判断", "定义变量"],
+                        correct: 1,
+                        explanation: "with语句会自动关闭文件等资源"
+                    }
+                ]
             }
         ];
 
@@ -564,6 +884,20 @@
             }
             render();
             window.scrollTo(0, 0);
+        }
+
+        function startProjectQuiz() {
+            if (currentProject && currentProject.quiz) {
+                currentQuiz = {
+                    category: currentProject.title,
+                    questions: currentProject.quiz
+                };
+                currentQuestionIndex = 0;
+                selectedAnswer = null;
+                currentPage = 'quiz';
+                render();
+                window.scrollTo(0, 0);
+            }
         }
 
         function render() {
@@ -940,6 +1274,17 @@
                                                 <span>完成练习任务，巩固所学知识</span>
                                             </li>
                                         </ul>
+                                    </div>
+
+                                    <div class="border-t border-gray-100 pt-4 mt-4">
+                                        <h4 class="text-sm font-semibold mb-3 text-gray-700">项目测试</h4>
+                                        <button onclick="startProjectQuiz()" class="w-full flex items-center justify-center space-x-2 px-4 py-3 gradient-bg text-white rounded-xl font-medium hover:opacity-90 transition-all shadow-lg">
+                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                            </svg>
+                                            <span>开始项目测试</span>
+                                        </button>
+                                        <p class="text-xs text-gray-500 mt-2 text-center">完成5道选择题测试</p>
                                     </div>
 
                                     <div class="border-t border-gray-100 pt-4 mt-4">
